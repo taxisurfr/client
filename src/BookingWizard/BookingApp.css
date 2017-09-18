@@ -1,0 +1,38 @@
+.BookingApp {
+  border-radius: 0px;
+  text-align: center;
+}
+.BookingApp-border {
+  padding: 0px;
+  background-color: transparent;
+}
+.BookingApp-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.header {
+  background-color: #222;
+  height: 150px;
+  padding: 0px;
+  color: red;
+}
+
+.BookingApp {
+  background-color: lightgrey;
+  height: 100%;
+}
+
+.BookingApp-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.mui-panel {
+  background-color: grey;
+  margin: 0;
+}
