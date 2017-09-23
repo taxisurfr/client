@@ -93,7 +93,5 @@
     "eject": "react-scripts eject",
     "server_prod": "node dist/server/server.js"
   },
-  "main": "server.js",
-
-
+  "main": "server.js"
 }
