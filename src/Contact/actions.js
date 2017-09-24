@@ -1,9 +1,7 @@
-import fetch from 'isomorphic-fetch'
 import util from 'util';
 import {getUrl} from '../util/network';
 import {getMethod} from '../util/network';
 import TableStore from './../util/TableStore';
-import Moment from 'moment';
 export const RECEIVE_CONTACT = 'RECEIVE_CONTACT'
 export const SHOW_VERIFIED = 'SHOW_VERIFIED'
 export const PAGE_CONTACT = 40;

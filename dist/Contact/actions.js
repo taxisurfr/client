@@ -7,10 +7,6 @@ exports.PAGE_CONTACT_CONFIRMATION = exports.PAGE_CONTACT = exports.SHOW_VERIFIED
 exports.showVerified = showVerified;
 exports.fetchContactOnServer = fetchContactOnServer;
 
-var _isomorphicFetch = require('isomorphic-fetch');
-
-var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -20,10 +16,6 @@ var _network = require('../util/network');
 var _TableStore = require('./../util/TableStore');
 
 var _TableStore2 = _interopRequireDefault(_TableStore);
-
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52,7 +44,7 @@ function fetchContactOnServer(contact) {
     var body = JSON.stringify(contact);
     return function (dispatch) {
 
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('contact'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('contact'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveContact(responseJson));
