@@ -103,13 +103,13 @@ var SampleApp = function SampleApp() {
             return (0, _redux.createStore)(rootReducer, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware));
         }
 
-        function globalize() {
-            momentLocalizer(Moment);
-            // Globalize.locale('en');
-            // globalizeLocalizer(Globalize);
-            // Globalize.formatMessage("intro-1");
-        }
-
+        /*       function globalize() {
+                   momentLocalizer(Moment);
+                   // Globalize.locale('en');
+                   // globalizeLocalizer(Globalize);
+                   // Globalize.formatMessage("intro-1");
+               }
+        */
         var preloadedState = { wizardReducer: _wizardReducer2.default };
 
         var store = configureStore(preloadedState);
