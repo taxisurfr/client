@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getRoute = getRoute;
 
-var _isomorphicFetch = require('isomorphic-fetch');
-
-var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -19,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function getRoute(link, receiveRoute) {
     return function (dispatch) {
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('link/' + link), (0, _network.getMethod)('GET')).then(function (response) {
+        fetch((0, _network.getUrl)('link/' + link), (0, _network.getMethod)('GET')).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveRoute(responseJson));

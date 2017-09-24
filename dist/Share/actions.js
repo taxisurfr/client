@@ -9,10 +9,6 @@ exports.nextPageAction = nextPageAction;
 exports.setPageAction = setPageAction;
 exports.doshare = doshare;
 
-var _isomorphicFetch = require('isomorphic-fetch');
-
-var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -103,7 +99,7 @@ function doshare(cmd, id) {
         id: id
     });
     return function (dispatch) {
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('doshare'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('doshare'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveShareCmd(cmd, responseJson));

@@ -22,10 +22,6 @@ exports.getSessionOnServer = getSessionOnServer;
 exports.getRoute = getRoute;
 exports.setShareId = setShareId;
 
-var _isomorphicFetch = require('isomorphic-fetch');
-
-var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
 var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -120,7 +116,7 @@ function fetchSharingRequestOnServer(sharingRequest) {
     _util2.default.inspect(sharingRequest, { showHidden: true, depth: null });
     var body = JSON.stringify(sharingRequest);
     return function (dispatch) {
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('requestshare'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('requestshare'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveShare(responseJson));
@@ -199,7 +195,7 @@ function findBookingForm(url, id) {
         id: id
     });
     return function (dispatch) {
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('formx'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('formx'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveFormData(responseJson));
@@ -215,7 +211,7 @@ function findRoute(link, src) {
         link: link
     });
     return function (dispatch) {
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('routefromlink'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('routefromlink'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             dispatch(receiveSharingData(false, responseJson)), getSessionOnServer(link, null, null, src);
@@ -234,7 +230,7 @@ function getPaymentOnServer(token, bookingId, share) {
     });
     return function (dispatch) {
         dispatch(paymentAction());
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('payment'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('payment'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receivePayment(responseJson));
@@ -250,7 +246,7 @@ function fetchBookingOnServer(booking) {
     var body = JSON.stringify(booking);
     return function (dispatch) {
 
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('newbooking'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('newbooking'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveBooking(responseJson));
@@ -266,7 +262,7 @@ function fetchNewSessionOnServer(session, shareAnnouncement) {
     var body = JSON.stringify(session);
     return function (dispatch) {
 
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('session'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('session'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveSession(responseJson, shareAnnouncement));
@@ -355,7 +351,7 @@ function getRouteAndSharingsOnServer(pickup, dropoff, src) {
         dropoff: dropoff
     });
     return function (dispatch) {
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('routeandsharings'), (0, _network.getMethod)('POST', body)).then(function (response) {
+        fetch((0, _network.getUrl)('routeandsharings'), (0, _network.getMethod)('POST', body)).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             dispatch(receiveSharingData(true, responseJson)), getSessionOnServer(null, pickup, dropoff, src);
@@ -372,7 +368,7 @@ function getSessionOnServer(link, pickup, dropoff, src) {
         dropoff: dropoff,
         src: src
     });
-    (0, _isomorphicFetch2.default)((0, _network.getUrl)('sessiononserver'), (0, _network.getMethod)('POST', body)).then(function (response) {
+    fetch((0, _network.getUrl)('sessiononserver'), (0, _network.getMethod)('POST', body)).then(function (response) {
         return response.json();
     }).then(function (responseJson) {
         _reactFacebookPixel2.default.track('ViewContent', { country: responseJson.country });
@@ -383,7 +379,7 @@ function getSessionOnServer(link, pickup, dropoff, src) {
 
 function getRoute(link, receiveRoute) {
     return function (dispatch) {
-        (0, _isomorphicFetch2.default)((0, _network.getUrl)('link/' + link), (0, _network.getMethod)('GET')).then(function (response) {
+        fetch((0, _network.getUrl)('link/' + link), (0, _network.getMethod)('GET')).then(function (response) {
             return response.json();
         }).then(function (responseJson) {
             return dispatch(receiveRoute(responseJson));
