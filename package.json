@@ -2,6 +2,10 @@
   "name": "client_",
   "version": "0.1.0",
   "private": true,
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
@@ -38,7 +42,9 @@
     "react-facebook": "^4.0.13",
     "react-pdf": "^1.6.1",
     "react-route": "^1.0.3",
+/*
     "react-script-loader": "0.0.1",
+*/
     "react-scripts": "0.8.4",
     "redux-form-website-template": "0.0.41",
     "sass-loader": "^6.0.3",
