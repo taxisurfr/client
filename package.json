@@ -9,9 +9,9 @@
     "ejs": "^2.4.1",
     "express": "^4.13.4"
   },
-  "engine": {
-    "node": "*",
-    "npm": "*"
+  "engines": {
+    "node": ">= 6.7.0",
+    "npm": ">= 5.4.2"
   },
   "scripts": {
     "start": "node server.js",
