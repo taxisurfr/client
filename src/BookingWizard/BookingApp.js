@@ -30,7 +30,10 @@ class BookingApp extends Component {
             <div className="BookingApp-border" style={ sectionStyle }>
 
                 <div className="BookingApp" >
-                    <BookingForm history={history} match={this.props.match} location={this.props.location} src={src}/>
+                    <BookingForm history={history}
+                                 match={this.props.match}
+                                 location={this.props.location}
+                                 src={src}/>
                 </div>
             </div>
         );

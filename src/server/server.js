@@ -78,13 +78,13 @@ var SampleApp = function () {
             )
         }
 
- /*       function globalize() {
+        function globalize() {
             momentLocalizer(Moment);
             // Globalize.locale('en');
             // globalizeLocalizer(Globalize);
             // Globalize.formatMessage("intro-1");
         }
-*/
+
         let preloadedState = {wizardReducer};
 
         const store = configureStore(preloadedState);

@@ -8,7 +8,8 @@ import {
     PAGE_SHARE_DETAILS_COLLECTION,
     PAGE_SHARE_ANNOUNCEMENT_CONFIRMATION,PAGE_SHARE_REQUEST_CONFIRMATION,PAGE_SHARE_ANNOUNCEMENT_DETAILS_COLLECTION,
     PAGE_SHARE_ANNOUNCEMENT_REQUEST_CONFIRMATION,
-    PAGE_CONTACT
+    PAGE_CONTACT,
+    SET_PICKUP,SET_DROPOFF
 } from './actions'
 
 const routeMessage = 'Sorry about that. We do not have a quote for that route. Get in contact (Contact above right) and we will be happy to provide one.'
@@ -54,6 +55,14 @@ function wizardReducer(state = {
                 isFetchingPayment: false,
                 paymentErrorText: action.error,
             });
+        case SET_PICKUP:
+            return Object.assign({}, state, {
+                pickup: action.pickup,
+            });
+        case SET_DROPOFF:
+            return Object.assign({}, state, {
+                dropoff: action.dropoff,
+            });
         case RECEIVE_BOOKING:
             return Object.assign({}, state, {
                 booking: action.booking,
@@ -74,11 +83,11 @@ function wizardReducer(state = {
         case RECEIVE_SHARINGDATA:
             return Object.assign({}, state, {
                 isFetchingSharingData: false,
-                route: action.route,
+                prices: action.prices,
                 sharingList: action.sharingList,
                 stripeKey: action.stripeKey,
                 noRouteMessage: action.route ===null && action.showNoRouteMessage? routeMessage : null,
-                page: action.route ? 2 : 1
+                page: action.prices && action.prices.length >0 ? 2 : 1
             });
        /* case RECEIVE_FORMDATA:
             return Object.assign({}, state, {

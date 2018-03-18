@@ -1,11 +1,11 @@
 export function getUrl(type) {
-    var url = 'http://server-taxisurfr1.b9ad.pro-us-east-1.openshiftapps.com/';
+    var url = 'https://taxisurfr-taxisurfr.rhcloud.com/';
 
     if ("undefined" !== typeof window) {
         console.log(window.location.hostname);
         console.log(window.location.port);
-        if (window.location.hostname === 'localhostx') {
-            url = 'http://localhost:8080/taxisurfr-1.0/';
+        if (window.location.hostname === 'localhost') {
+            url = 'http://localhost:8080/';
             console.log('CAUTION: connecting with:'+url);
         }
     }

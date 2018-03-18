@@ -17,6 +17,7 @@ import {Redirect} from 'react-router-dom'
 import ReactPixel from 'react-facebook-pixel';
 
 import {
+    setPickupOrDropoff,
     nextPageAction,
     homePageAction,
     setPageAction,
@@ -76,6 +77,7 @@ class BookingForm extends Component {
         this.getPickup = getPickup.bind(this);
         this.goSharingList = this.goSharingList.bind(this);
         this.createSession = this.createSession.bind(this);
+        this.onPickupDropoffUpdate = this.onPickupDropoffUpdate.bind(this);
     }
 
     acceptDetails() {
@@ -94,18 +96,16 @@ class BookingForm extends Component {
         dispatch(setPageAction(PAGE_PAYMENT));
     }
 
+    onPickupDropoffUpdate(pickupDropoff,value){
+        const {dispatch} = this.props;
+        dispatch(setPickupOrDropoff(pickupDropoff,value));
+    }
     getSharingList() {
 
 
         const {dispatch} = this.props;
-        var {pickup} = this.props.values;
-        var {dropoff} = this.props.values;
-        if (dropoff.name) {
-            dropoff = dropoff.name;
-        }
-        if (pickup.name) {
-            pickup = pickup.name;
-        }
+        var {pickup} = this.props;
+        var {dropoff} = this.props;
         ReactPixel.track('Search', {pickup, dropoff});
         dispatch(fetchSharingDataIfNeeded(pickup, dropoff));
     }
@@ -137,19 +137,21 @@ class BookingForm extends Component {
 
     createSession(shareAnnouncement) {
         const {dispatch} = this.props;
-        const {route} = this.props;
+        const {prices} = this.props;
         const session = {
-            routeId: route.id,
+            /*
+                        fixme
+            */
         };
         dispatch(fetchNewSession(session, shareAnnouncement));
     }
 
     createBooking() {
         const {dispatch} = this.props;
-        const {route} = this.props;
+        const price = this.props.prices[0];
         const {values} = this.props;
         const booking = {
-            routeId: route.id,
+            price: price,
             name: values.name,
             date: values.date,
             email: values.email,
@@ -217,21 +219,20 @@ class BookingForm extends Component {
 
 
     getHeadling(shareAnnouncement) {
-        if (this.props.route) {
-            const routedesc = this.getRouteDescription(this.props.route);
-            const price = shareAnnouncement ? '' : this.getFormatedPrice(this.props.route, this.props.route.cents);
-            const priceToShare = this.getFormatedPrice(this.props.route, this.props.route.centsToJoin);
+        if (this.props.prices) {
+            const routedesc = this.getRouteDescription(this.props.prices);
+            const price = shareAnnouncement ? '' : this.getFormatedPrice(this.props.prices);
+            //const priceToShare = this.getFormatedPrice(this.props.route, this.props.route.centsToJoin);
             if (this.props.shareId) {
                 return routedesc;
             } else {
                 return routedesc + '    ' + price;
             }
         }
-        return 'Taxi transfers in Sri Lanka';
+        return 'taxi transfers in Sri Lanka';
     }
 
     render() {
-        console.log("XXXXXXXXXXXXXX render");
 
         const base = 'https://app.taxisurfr.com/review/';
         const sectionStyle = {
@@ -246,31 +247,14 @@ class BookingForm extends Component {
         const {page} = this.props;
         var target = (match && match.params && match.params[0]) ? match.params[0] : null;
 
-        console.log("XXXXXXXXXXXXXXtarget:"+target);
         if (target) {
             target = target.replace('/lka/','');
             this.props.match.params[0] = null;
             dispatch(findRoute(target, 'srcfixme'));
         }
 
-        /* if (target && target != 'LOADED') {
-             const route_link = match.params.route_link;
-             this.props.match.params.route_link = 'LOADED';
-             this.props.match.path = null;
-             dispatch(findRoute(route_link, src));
-             return null;
-         } else {
-             const link = this.props.route ? "/lka/" + this.props.route.link : null;
-             if (link && target != 'LOADED') {
-                 return (
-                     <div>
-                         <Redirect to={link}/>
-                     </div>
-                 )
-             }
-         }*/
         const {values} = this.props;
-        const link = this.props.booking ? this.props.booking.route.link : '';
+        const link = this.props.booking ? this.props.booking.price.link : '';
         const routeLink = 'https://app.taxisurfr.com/lka/' + link;
         const s1 = {verticalAlign: 'middle'};
         const s2 = {textAlign: 'right'};
@@ -282,52 +266,58 @@ class BookingForm extends Component {
         const rupee =
             page === PAGE_SHARE_DETAILS_COLLECTION ||
             page === PAGE_SHARE_ANNOUNCEMENT_DETAILS_COLLECTION
-                ? '' : this.getFormatedRupeePrice(this.props.route, this.props.shareAnnouncement);
+                ? '' : this.getFormatedRupeePrice(this.props.prices, this.props.shareAnnouncement);
         document.title = headline;
 
-        const price = this.props.route ? this.getFormatedPrice(this.props.route, this.props.route.cents) : null;
-        const priceSharing = this.props.route ? this.getFormatedPrice(this.props.route, this.props.route.centsToJoin) : null;
+        const price = this.getFormatedPrice(this.props.prices);
+        const priceSharing = this.getFormatedPrice(this.props.prices);
+
+
+        const airportPickup = this.props.prices && this.props.prices.length > 0? this.props.prices[0].startroute.name === 'COLOMBO AIRPORT' : null;
 
         return (
 
             <div style={sectionStyle}>
                 <TaxisurfrAppbar
                     navigateHome={this.navigateHome}
-                    headline={headline}
-                    rupee={rupee}
                 />
-                {page === 1 && <Transport onSubmit={this.getSharingList} noRouteMessage={this.props.noRouteMessage}/>}
+                {page === 1 && <Transport onSubmit={this.getSharingList}
+                                          onPickupDropoffUpdate={this.onPickupDropoffUpdate}
+                                          noRouteMessage={this.props.noRouteMessage}
+                                          startlocations={this.props.startlocations}
+                                          endlocations={this.props.endlocations}
+                />}
                 {page === 2 && <SharingList
                     onSelectShare={this.requestShare}
                     sharingList={this.props.sharingList}
                     previousPage={this.previousPage}
                     announceShare={this.createNewSessionWithShareAnnouncement}
-                    route={this.props.route}
+                    prices={this.props.prices}
                     onSubmit={this.createNewSession}
-                    routeShortDescription={this.getRouteDescription(this.props.route)}
-                    routeLongDescription={this.getRouteLongDescription(this.props.route)}
+                    routeShortDescription={this.getRouteDescription(this.props.prices)}
+                    routeLongDescription={this.getRouteLongDescription(this.props.prices)}
                     price={price}
                     priceSharing={priceSharing}
                 />}
                 {page === 3 && <BookingDetailsCollection previousPage={this.previousPage}
                                                          values={values}
                                                          onSubmit={this.createBooking}
-                                                         pickup={this.getPickup(this.props.route)}
-                                                         pickupType={this.props.route.pickupType}
+                                                         pickup={this.getPickup(this.props.prices)}
+                                                         airportPickup={airportPickup}
                                                          shareAnnouncement={this.props.shareAnnouncement}
 
 
                 />}
                 {page === 4 && <BookingDetailsShow
-                    pickup={this.getPickup(this.props.route)}
-                    price={this.getFormatedEndPrice(this.props.route, this.props.booking, this.props.route.cents)}
+                    pickup={this.getPickup(this.props.prices)}
+                    price={this.getFormatedEndPrice(this.props.prices, this.props.booking)}
                     booking={this.props.booking}
                     previousPage={this.previousPage}
                     onSubmit={this.acceptDetails}/>}
                 {page === PAGE_PAYMENT && <BookingPayment
                     stripeKey={this.props.stripeKey}
-                    description={this.getRouteDescription(this.props.route)}
-                    price={this.getFormatedEndPrice(this.props.route, this.props.booking, this.props.route.cents)}
+                    description={this.getRouteDescription(this.props.prices)}
+                    price={this.getFormatedEndPrice(this.props.prices, this.props.booking)}
                     isFetchingPayment={this.props.isFetchingPayment}
                     booking={this.props.booking}
                     CCname={values.CCname}
@@ -344,7 +334,7 @@ class BookingForm extends Component {
                                           onSubmit={this.createShareRequest}
                                           value={this.startDate}
                                           dateText={this.props.dateText}
-                                          pickup={this.getPickup(this.props.route)}
+                                          pickup={this.getPickup(this.props.prices)}
 
                 />}
                 {page === PAGE_SHARE_ANNOUNCEMENT_DETAILS_COLLECTION &&
@@ -355,7 +345,7 @@ class BookingForm extends Component {
                                                       onSubmit={this.createShareRequest}
                                                       value={this.startDate}
                                                       dateText={this.props.dateText}
-                                                      pickup={this.getPickup(this.props.route)}
+                                                      pickup={this.getPickup(this.props.prices)}
 
                 />}
 
@@ -372,7 +362,7 @@ class BookingForm extends Component {
                 {page === 6 &&
                 <BookingConfirmation previousPage={this.previousPage}
                                      routeLink={routeLink}
-                                     pickupType={this.props.route.pickupType}
+                                     airportPickup={airportPickup}
                 />}
 
                 <TaxisurfrFooter/>
@@ -388,13 +378,15 @@ BookingForm.propTypes = {
 };
 
 function mapStateToProps(state) {
+    const {pickup} = state.wizardReducer;
+    const {dropoff} = state.wizardReducer;
     const {country} = state.wizardReducer;
     const {route_link} = state.wizardReducer || null;
     const {page} = state.wizardReducer;
     const {bookingId} = state.wizardReducer;
     const {shareId} = state.wizardReducer;
     const {sharingList} = state.wizardReducer || null;
-    const {route} = state.wizardReducer;
+    const {prices} = state.wizardReducer;
     const {booking} = state.wizardReducer;
     const {dateText} = state.wizardReducer;
     const {isFetchingPayment} = state.wizardReducer;
@@ -404,8 +396,6 @@ function mapStateToProps(state) {
     const {shareAnnouncement} = state.wizardReducer;
     const paymentErrorText = state.wizardReducer.paymentErrorText ? state.wizardReducer.paymentErrorText : '';
     const values = state.form.wizard && state.form.wizard.values ? state.form.wizard.values : {
-        pickup: 'test airport',
-        dropoff: 'test arugam bay',
         amount: '66600',
         name: 'Peter Hall',
         flightNo: 'QR222',
@@ -417,39 +407,26 @@ function mapStateToProps(state) {
         CCname: 'Peter CC',
         paymentErrorText: paymentErrorText
     };
-    const price = route ? '$US' + route.cents / 100 : null;
-    const priceToJoin = route ? '$US' + route.centsToJoin / 100 : null;
-    const description = values.pickup + ' to ' + values.dropoff;
 
-    if (route && route.pickupType === ('SHUTTLE_AIRPORT')) {
-        values.landingTime = '10:00 am';
-        values.flightNo = 'Airport meeting point';
-    }
-    if (route && route.pickupType === ('SHUTTLE_HOTEL')) {
-        values.landingTime = '23:00 pm';
-    }
     return {
+        pickup,dropoff,
         page,
         shareId,
         bookingId,
         values,
         sharingList,
-        description,
-        price,
         isFetchingPayment,
         form,
         stripeKey,
         paymentErrorText,
-        priceToJoin,
         dateText,
-        route,
+        prices,
         booking,
         route_link,
         noRouteMessage,
         shareAnnouncement
     }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
     return {

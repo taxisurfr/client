@@ -6,6 +6,7 @@ import ContainerDimensions from 'react-container-dimensions'
 import Panel from 'muicss/lib/react/panel';
 import ReputationModal from './ReputationModal';
 import ReactPixel from 'react-facebook-pixel';
+import {Carousel } from 'react-bootstrap';
 
 import {renderReadonly, renderConditions, renderDescription, renderPrice} from '../util/render/renderReadonlyField'
 
@@ -58,15 +59,14 @@ class SharingList extends React.Component {
 
     render() {
         const show = {backgroundColor: 'HoneyDew'};
-        const {handleSubmit, announceShare, route} = this.props;
+        const {handleSubmit, announceShare, prices} = this.props;
+        const price = prices? prices[0]:null;
         var sharingList = this.props.sharingList || null;
-        var isShuttle = this.props.route ? this.props.route.pickupType.startsWith('SHUTTLE_'): false;
-        var {routeShortDescription, routeLongDescription, price, priceSharing} = this.props;
+        var {routeShortDescription, routeLongDescription, priceSharing} = this.props;
         var sharingListSize = ((sharingList === null || sharingList.getSize() === 0)) ? 0 : sharingList.getSize();
         var hide = {
             display: (  sharingListSize === 0) ? 'none' : null
         };
-
         return (
             <form onSubmit={handleSubmit}>
                 <div itemScope itemType="http://schema.org/Offer">
@@ -77,7 +77,7 @@ class SharingList extends React.Component {
                             <Field name="routeLongDescription" hint={routeLongDescription}
                                    component={renderDescription}
                                    label="Description"/>
-                            <Field name="conditions" route={route} component={renderConditions}
+                            <Field name="conditions" price={price} component={renderConditions}
                                    label="Conditions"/>
 
 
@@ -88,12 +88,64 @@ class SharingList extends React.Component {
                 </div>
                 <div className="mui--text-left">
                     <Panel style={show}>
-                        <ReputationModal/>
+                    <div className="mui--text-headline">Read some of our reviews</div>
+                    <Carousel>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/0001.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00001.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/0002.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00002.png" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00003.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00003.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00004.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00005.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00006.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img src="http://app.taxisurfr.com/review/00007.jpg" />
+                            <Carousel.Caption>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    </Carousel>
                     </Panel>
                 </div>
                 <div>
 
-                    {sharingListSize !== 0 && !isShuttle && <Panel style={show}>
+                    {sharingListSize !== 0 && <Panel style={show}>
                         <div className="mui--text-left">
                             <div className="mui--text-headline">Want to share a taxi?</div>
                             <div className="mui--text-title">Here are some existing orders and share announcements
@@ -143,7 +195,7 @@ class SharingList extends React.Component {
                         </div>
                     </Panel>}
 
-                    {sharingListSize === 0 && !isShuttle && <Panel style={show}>
+                    {sharingListSize === 0 && <Panel style={show}>
                         <div className="mui--text-left">
                             <div className="mui--text-title">Want to share but not yet ready to book and pay a taxi?
                                 Then simply create a share announcement.

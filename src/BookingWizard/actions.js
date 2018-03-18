@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch'
 import util from 'util';
 import {getUrl} from '../util/network';
 import {getMethod} from '../util/network';
@@ -23,6 +24,8 @@ export const REGISTER_SHAREID = 'REGISTER_SHAREID'
 export const PAYMENT_ERROR = 'PAYMENT_ERROR'
 export const RECEIVE_SHARE_CMD = 'RECEIVE_SHARE_CMD'
 export const RECEIVE_DO_NOTHING = 'RECEIVE_DO_NOTHING'
+export const SET_PICKUP = 'SET_PICKUP'
+export const SET_DROPOFF = 'SET_DROPOFF'
 
 
 export const PAGE_CACHED = -1;
@@ -63,6 +66,21 @@ export function setPageAction(p) {
     return {
         type: SET_PAGE,
         page: p
+    }
+}
+
+export function setPickupOrDropoff(pickupDropoff, value) {
+    if ('PICKUP' === pickupDropoff) {
+        return {
+            type: SET_PICKUP,
+            pickup: value
+        }
+    }
+    if ('DROPOFF' === pickupDropoff) {
+        return {
+            type: SET_DROPOFF,
+            dropoff: value
+        }
     }
 }
 
@@ -294,7 +312,9 @@ function receiveSharingData(forward, json) {
     return {
         type: RECEIVE_SHARINGDATA,
         sharingList: new TableStore(json.sharingList),
-        route: json.route,
+        start: json.prices && json.prices.length > 0 ? json.prices[0].startroute : null,
+        end: json.prices && json.prices.length > 0 ? json.prices[0].endroute : null,
+        prices: json.prices,
         forward: forward,
         showNoRouteMessage: json.showNoRouteMessage,
         stripeKey: json.stripeKey

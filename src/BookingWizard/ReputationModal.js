@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import Slider from 'react-slick';
 import FacebookProvider, { Page,Like } from 'react-facebook';
 import ReactPixel from 'react-facebook-pixel';
 
-
-import {Modal, Button, Popover, Tooltip, OverlayTrigger} from 'react-bootstrap';
+import {Modal, Button, Popover, Tooltip, Carousel } from 'react-bootstrap';
 
 class ReputationModal extends Component {
     constructor(props) {
@@ -94,61 +92,6 @@ class ReputationModal extends Component {
                 >
                     Our facebook page
                 </Button>*/}
-
-                <Modal show={this.state.showModalReviews} onHide={this.close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Reviews from our passengers</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-
-
-                        <Slider {...settings}>
-                            <div style={imgrep}><img src={base + '0001.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '0002.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00001.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00003.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00004.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00005.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00006.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00006.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00008.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00009.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00010.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00011.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00012.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00013.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00014.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00015.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00016.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00017.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00018.jpg'}/></div>
-                            <div style={imgrep}><img src={base + '00019.jpg'}/></div>
-                        </Slider>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.closeReviews}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
-
-
-                <Modal show={this.state.showModalFacebook} onHide={this.closeFacebook}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Our Facebook Page</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <FacebookProvider appId="123456789">
-                            <Like href="http://www.facebook.com/taxisurfr" colorScheme="dark" showFaces share />
-                        </FacebookProvider>
-
-                        <FacebookProvider appId="1651399821757463">
-                            <Page href="http://www.facebook.com/taxisurfr" colorScheme="dark" showFaces share />
-                        </FacebookProvider>
-
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.closeFacebook}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
             </div>
         );
     }

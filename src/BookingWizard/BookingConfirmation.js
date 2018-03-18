@@ -6,7 +6,7 @@ import {Button} from 'react-bootstrap';
 import Panel from 'muicss/lib/react/panel';
 
 const BookingConfirmation = (props) => {
-    var isShuttle = props.pickupType.startsWith('SHUTTLE_');
+    var isShuttle = false;
     return (
         <div>
             <Panel>

@@ -17,8 +17,6 @@ class BookingDetailsCollection extends React.Component {
         const showWhiteBackground = {border: 'none', backgroundColor: 'white'};
         const {values, description, price, handleSubmit, previousPage, announceShare, pickup, shareAnnouncement,pickupType} = this.props;
         const buttonAction = shareAnnouncement ? 'Announce share' : 'Book taxi';
-        const isShuttle = pickupType.startsWith('SHUTTLE_');
-        const isShuttleAirport = pickupType === 'SHUTTLE_AIRPORT';
         return (
             <form onSubmit={handleSubmit}>
 
@@ -42,13 +40,13 @@ class BookingDetailsCollection extends React.Component {
                         Please fill in your details below to book your taxi.
                         <br/>
                         </div>}
-                        {!isShuttle && <Field name="date" label="Date of pickup" component={renderCalendar}/>}
-                        {isShuttle && <Field name="date" label="Date of shuttle" component={renderShuttleCalendar}/>}
-                        {!isShuttleAirport && <Field name="flightNo" id="flightNo" hint={pickup.typeHint} component={renderInput}
-                               label={pickup.type}/>}
-                        {!isShuttle && <Field name="landingTime" label={pickup.time}
+                            <Field name="date" label="Date of pickup" component={renderCalendar}/>
+                            <Field name="date" label="Date of shuttle" component={renderShuttleCalendar}/>
+                            <Field name="flightNo" id="flightNo" hint={pickup.typeHint} component={renderInput}
+                               label={pickup.type}/>
+                            <Field name="landingTime" label={pickup.time}
                                hint={pickup.timeHint} readonly={true}
-                               component={renderInput} type="input"/>}
+                               component={renderInput} type="input"/>
                         <Field name="name" id="name" hint="Your name"
                                component={renderInput} label="Name"/>
                         <Field name="email" id="email" hint="your@email.com"
