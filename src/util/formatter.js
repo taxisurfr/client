@@ -25,7 +25,7 @@ export function getFormatedEndPrice(prices, booking){
 
 export function getFormatedRupeePrice(prices,shareAnnouncement){
     const price = getPrice(prices);
-    return price  && !shareAnnouncement ? '(approx. ' +price.cents*154/100+' rupees)': '';
+    return price  && !shareAnnouncement ? price.cents*154/100+' rupees': '';
 }
 
 function getPrice(prices) {

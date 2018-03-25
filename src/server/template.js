@@ -1,5 +1,5 @@
-export default ({ body, title, initialState }) => {
-  return `
+export default ({body, title, initialState}) => {
+    return `
     <!DOCTYPE html>
     <html>
       <head>
@@ -14,6 +14,8 @@ export default ({ body, title, initialState }) => {
           rel="stylesheet" type="text/css"/>
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
           media="screen, projection" rel="stylesheet" type="text/css"/>
+          
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
       </head>
       

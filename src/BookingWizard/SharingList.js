@@ -6,7 +6,7 @@ import ContainerDimensions from 'react-container-dimensions'
 import Panel from 'muicss/lib/react/panel';
 import ReputationModal from './ReputationModal';
 import ReactPixel from 'react-facebook-pixel';
-import {Carousel } from 'react-bootstrap';
+import {Carousel,Well,Popover,Glyphicon } from 'react-bootstrap';
 
 import {renderReadonly, renderConditions, renderDescription, renderPrice} from '../util/render/renderReadonlyField'
 
@@ -57,10 +57,10 @@ class SharingList extends React.Component {
         this.props.onSelectShare(index);
     }
 
+
     render() {
         const show = {backgroundColor: 'HoneyDew'};
         const {handleSubmit, announceShare, prices} = this.props;
-        const price = prices? prices[0]:null;
         var sharingList = this.props.sharingList || null;
         var {routeShortDescription, routeLongDescription, priceSharing} = this.props;
         var sharingListSize = ((sharingList === null || sharingList.getSize() === 0)) ? 0 : sharingList.getSize();
@@ -74,14 +74,23 @@ class SharingList extends React.Component {
 
                     <Panel style={show}>
                         <div className="mui--text-left">
-                            <Field name="routeLongDescription" hint={routeLongDescription}
-                                   component={renderDescription}
-                                   label="Description"/>
-                            <Field name="conditions" price={price} component={renderConditions}
-                                   label="Conditions"/>
-
-
+                            <Well bsSize="large"><h1><strong>{this.props.price}</strong></h1></Well>
+                            <Well bsSize="large">{this.props.rupee}</Well>
+                            <Well>
+                            <Glyphicon glyph="star" />
+                            <Glyphicon glyph="star" />
+                            <Glyphicon glyph="star" />
+                            <Glyphicon glyph="star" />
+                            </Well>
                             <button type="submit" className="next">Book now.</button>
+                        </div>
+                    </Panel>
+                </div>
+                <div>
+                    <Panel style={show}>
+                        <div className="mui--text-left">
+                            <Field name="conditions" component={renderConditions}
+                                   label="Conditions"/>
 
                         </div>
                     </Panel>

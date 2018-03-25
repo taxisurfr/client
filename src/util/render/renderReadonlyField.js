@@ -2,12 +2,12 @@ import React from 'react'
 
 const showWhiteBackground = {border: 'none', backgroundColor: 'white'};
 
-export const renderConditions = ({hint, label, type, route}) => (
+export const renderConditions = ({hint, label, type}) => (
     <div>
         <div>
             <h2 className="mui--text-title">Features</h2>
             <table width="100%">
-                {route && !route.pickupType.startsWith('SHUTTLE_') && <tbody>
+                {true && <tbody>
                 <tr>
                     <td>
                         <i className="fa fa-plus"/><span className="mui--text-title"> All fuel charges and expenses are included.</span>
@@ -37,41 +37,38 @@ export const renderConditions = ({hint, label, type, route}) => (
                     </td>
                 </tr>
                 </tbody>}
-                {route && route.pickupType == 'SHUTTLE_AIRPORT' && <tbody>
-                <tr>
-                    <td>
-                        <i className="fa fa-plus"/><span
-                        className="mui--text-title"> Pickup from the airport at {route.description}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i className="fa fa-plus"/><span className="mui--text-title"> Price is per person.</span>
-                    </td>
-                </tr>
-                </tbody>}
-                {route && route.pickupType == 'SHUTTLE_HOTEL' && <tbody>
-                <tr>
-                    <td>
-                        <i className="fa fa-plus"/><span
-                        className="mui--text-title"> Pickup from your hotel approx. {route.description}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i className="fa fa-plus"/><span className="mui--text-title"> Price is per person.</span>
-                    </td>
-                </tr>
-                </tbody>}
             </table>
         </div>
     </div>
 )
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const renderDescription = ({hint, label, type}) => (
     <div>
-        <h2 className="mui--text-headline">Your Transfer</h2>
         <table width="100%">
             <tbody>
             <tr>
@@ -90,11 +87,11 @@ export const renderPrice = ({hint, label, type}) => (
             <tbody>
             <tr>
                 <td>
-                    <td><h2 className="mui--text-title">Price</h2></td>
+                    <td><h1 className="mui--text-title"></h1></td>
                 </td>
                 <td>
                     <td>
-                        <div className="mui--text-headline">{hint}</div>
+                        <h1 className="mui--text-title">{hint}</h1>
                     </td>
                 </td>
             </tr>

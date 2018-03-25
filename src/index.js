@@ -13,9 +13,6 @@ import momentLocalizer from 'react-widgets/lib/localizers/moment';
 
 import createHistory from 'history/createBrowserHistory'
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
 import './BookingWizard/BookingApp.css';
 import './css/card.css';
 import 'fixed-data-table/dist/fixed-data-table.min.css';

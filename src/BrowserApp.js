@@ -9,6 +9,11 @@ import Appbar from 'muicss/lib/react/appbar';
 import NavLink from './util/NavLink'
 import FacebookProvider, {Page, Like} from 'react-facebook';
 import ReactPixel from 'react-facebook-pixel';
+import {Carousel } from 'react-bootstrap';
+
+
+
+
 
 class BrowserApp extends Component {
     constructor(props) {

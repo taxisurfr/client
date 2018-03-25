@@ -379,11 +379,13 @@ class Transport extends React.Component {
                         </Panel>
                         <Panel style={show}>
                             <div style={noborder}>
-                                <div className="mui--text-center mui--text-headline style"
+                                <div className="mui--text-left mui--text-headline style"
                                      style={noborder}>{noRouteMessage}</div>
-                                <h1>
+                                <div className="mui--text-left">
+                                <h1 className="mui--text-left">
                                     Pickup
                                 </h1>
+                                </div>
                                 <Select
                                     placeholder='please type a name'
                                     name="form-pickup"
@@ -396,7 +398,7 @@ class Transport extends React.Component {
                                         })}
 
                                 />
-                                <h1>
+                                <h1 className="mui--text-left">
                                     Dropoff
                                 </h1>
                                 <Select
@@ -435,6 +437,16 @@ class Transport extends React.Component {
         )
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 export default reduxForm({

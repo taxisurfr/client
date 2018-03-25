@@ -279,6 +279,8 @@ class BookingForm extends Component {
 
             <div style={sectionStyle}>
                 <TaxisurfrAppbar
+                    routeDescription={this.getRouteDescription(this.props.prices)}
+                    rupee={rupee}
                     navigateHome={this.navigateHome}
                 />
                 {page === 1 && <Transport onSubmit={this.getSharingList}
@@ -297,6 +299,7 @@ class BookingForm extends Component {
                     routeShortDescription={this.getRouteDescription(this.props.prices)}
                     routeLongDescription={this.getRouteLongDescription(this.props.prices)}
                     price={price}
+                    rupee={rupee}
                     priceSharing={priceSharing}
                 />}
                 {page === 3 && <BookingDetailsCollection previousPage={this.previousPage}
@@ -378,6 +381,7 @@ BookingForm.propTypes = {
 };
 
 function mapStateToProps(state) {
+    const headline ='headline';
     const {pickup} = state.wizardReducer;
     const {dropoff} = state.wizardReducer;
     const {country} = state.wizardReducer;
@@ -409,6 +413,7 @@ function mapStateToProps(state) {
     };
 
     return {
+        headline,
         pickup,dropoff,
         page,
         shareId,
