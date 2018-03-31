@@ -17,6 +17,7 @@ import {Redirect} from 'react-router-dom'
 import ReactPixel from 'react-facebook-pixel';
 
 import {
+    setPriceForBooking,
     setPickupOrDropoff,
     nextPageAction,
     homePageAction,
@@ -78,6 +79,12 @@ class BookingForm extends Component {
         this.goSharingList = this.goSharingList.bind(this);
         this.createSession = this.createSession.bind(this);
         this.onPickupDropoffUpdate = this.onPickupDropoffUpdate.bind(this);
+        this.selectPrice = this.selectPrice.bind(this);
+    }
+
+    selectPrice(price) {
+        const {dispatch} = this.props;
+        dispatch(setPriceForBooking(price));
     }
 
     acceptDetails() {
@@ -146,9 +153,10 @@ class BookingForm extends Component {
         dispatch(fetchNewSession(session, shareAnnouncement));
     }
 
+
     createBooking() {
         const {dispatch} = this.props;
-        const price = this.props.prices[0];
+        const {price} = this.props;
         const {values} = this.props;
         const booking = {
             price: price,
@@ -290,6 +298,7 @@ class BookingForm extends Component {
                                           endlocations={this.props.endlocations}
                 />}
                 {page === 2 && <SharingList
+                    selectPrice={this.selectPrice}
                     onSelectShare={this.requestShare}
                     sharingList={this.props.sharingList}
                     previousPage={this.previousPage}
@@ -391,6 +400,7 @@ function mapStateToProps(state) {
     const {shareId} = state.wizardReducer;
     const {sharingList} = state.wizardReducer || null;
     const {prices} = state.wizardReducer;
+    const {price} = state.wizardReducer;
     const {booking} = state.wizardReducer;
     const {dateText} = state.wizardReducer;
     const {isFetchingPayment} = state.wizardReducer;
@@ -426,6 +436,7 @@ function mapStateToProps(state) {
         paymentErrorText,
         dateText,
         prices,
+        price,
         booking,
         route_link,
         noRouteMessage,

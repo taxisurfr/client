@@ -12,7 +12,7 @@ function getUrl(type) {
     if ("undefined" !== typeof window) {
         console.log(window.location.hostname);
         console.log(window.location.port);
-        if (window.location.hostname === 'localhostx') {
+        if (window.location.hostname === 'localhost') {
             url = 'http://localhost:8080/taxisurfr-1.0/';
             console.log('CAUTION: connecting with:' + url);
         }

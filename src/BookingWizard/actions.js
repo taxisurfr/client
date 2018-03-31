@@ -26,6 +26,7 @@ export const RECEIVE_SHARE_CMD = 'RECEIVE_SHARE_CMD'
 export const RECEIVE_DO_NOTHING = 'RECEIVE_DO_NOTHING'
 export const SET_PICKUP = 'SET_PICKUP'
 export const SET_DROPOFF = 'SET_DROPOFF'
+export const SET_PRICE_FOR_BOOKING = 'SET_PRICE_FOR_BOOKING'
 
 
 export const PAGE_CACHED = -1;
@@ -305,15 +306,20 @@ function receiveSessionOnServer(json) {
     }
 }
 
+export function setPriceForBooking(price) {
+    return {
+        type: SET_PRICE_FOR_BOOKING,
+        price:price
+    }
+}
+
 //// share
 function receiveSharingData(forward, json) {
 
     console.log('received sharing data for route')
     return {
         type: RECEIVE_SHARINGDATA,
-        sharingList: new TableStore(json.sharingList),
-        start: json.prices && json.prices.length > 0 ? json.prices[0].startroute : null,
-        end: json.prices && json.prices.length > 0 ? json.prices[0].endroute : null,
+        sharingList: json.sharingList ? new TableStore(json.sharingList): null,
         prices: json.prices,
         forward: forward,
         showNoRouteMessage: json.showNoRouteMessage,

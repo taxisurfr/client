@@ -4,7 +4,7 @@ import {
     REQUEST_SHARINGDATA,
     RECEIVE_SHARINGDATA,
     REQUEST_SHARE,RECEIVE_SHARE,REGISTER_SHAREID,PAYMENT_ERROR,RECEIVE_RESORT,RECEIVE_SHARE_CMD,
-    RECEIVE_FORMDATA,
+    SET_PRICE_FOR_BOOKING,
     PAGE_SHARE_DETAILS_COLLECTION,
     PAGE_SHARE_ANNOUNCEMENT_CONFIRMATION,PAGE_SHARE_REQUEST_CONFIRMATION,PAGE_SHARE_ANNOUNCEMENT_DETAILS_COLLECTION,
     PAGE_SHARE_ANNOUNCEMENT_REQUEST_CONFIRMATION,
@@ -89,11 +89,11 @@ function wizardReducer(state = {
                 noRouteMessage: action.route ===null && action.showNoRouteMessage? routeMessage : null,
                 page: action.prices && action.prices.length >0 ? 2 : 1
             });
-       /* case RECEIVE_FORMDATA:
+       case SET_PRICE_FOR_BOOKING:
             return Object.assign({}, state, {
-                form: action.form,
-                page: PAGE_BOOKING_FORM
-            });*/
+                price: action.price,
+                page: state.page+1
+            });
         case RECEIVE_SHARE_CMD:
             return Object.assign({}, state, {
                 stripeKey: action.stripeKey,

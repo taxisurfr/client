@@ -4,13 +4,14 @@ import validate from './validate'
 import FixedDataTable from 'fixed-data-table';
 import ContainerDimensions from 'react-container-dimensions'
 import Panel from 'muicss/lib/react/panel';
-import ReputationModal from './ReputationModal';
+import Offer from './Offer';
 import ReactPixel from 'react-facebook-pixel';
-import {Carousel,Well,Popover,Glyphicon } from 'react-bootstrap';
 
 import {renderReadonly, renderConditions, renderDescription, renderPrice} from '../util/render/renderReadonlyField'
 
+import {Carousel, Well, Popover, Glyphicon, Grid, Row, Col, Thumbnail, Image} from 'react-bootstrap';
 import {Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
+
 const {Table, Column, Cell} = FixedDataTable;
 
 const tooltip = (
@@ -43,7 +44,7 @@ const StatusCell = ({rowIndex, data, col, ...props}) => (
         <OverlayTrigger placement="left" overlay={tooltipTB}>
             <span><i className="fa fa-cab"/><span className="mui--text-title"> Taxi ordered</span></span>
         </OverlayTrigger>}
-    </ Cell >
+    </ Cell>
 );
 
 class SharingList extends React.Component {
@@ -57,33 +58,30 @@ class SharingList extends React.Component {
         this.props.onSelectShare(index);
     }
 
-
     render() {
+        var prices = this.props.prices && this.props.prices.length > 0 ? this.props.prices : [];
         const show = {backgroundColor: 'HoneyDew'};
-        const {handleSubmit, announceShare, prices} = this.props;
+        const {handleSubmit, announceShare} = this.props;
         var sharingList = this.props.sharingList || null;
         var {routeShortDescription, routeLongDescription, priceSharing} = this.props;
         var sharingListSize = ((sharingList === null || sharingList.getSize() === 0)) ? 0 : sharingList.getSize();
         var hide = {
-            display: (  sharingListSize === 0) ? 'none' : null
+            display: (sharingListSize === 0) ? 'none' : null
         };
         return (
             <form onSubmit={handleSubmit}>
                 <div itemScope itemType="http://schema.org/Offer">
 
-
                     <Panel style={show}>
-                        <div className="mui--text-left">
-                            <Well bsSize="large"><h1><strong>{this.props.price}</strong></h1></Well>
-                            <Well bsSize="large">{this.props.rupee}</Well>
-                            <Well>
-                            <Glyphicon glyph="star" />
-                            <Glyphicon glyph="star" />
-                            <Glyphicon glyph="star" />
-                            <Glyphicon glyph="star" />
-                            </Well>
-                            <button type="submit" className="next">Book now.</button>
-                        </div>
+                    {
+                        prices.map((price) => {
+                            return <Offer
+                                price={price}
+                                selectPrice={this.props.selectPrice}
+                            />;
+                        })
+                    }
+
                     </Panel>
                 </div>
                 <div>
@@ -97,59 +95,59 @@ class SharingList extends React.Component {
                 </div>
                 <div className="mui--text-left">
                     <Panel style={show}>
-                    <div className="mui--text-headline">Read some of our reviews</div>
-                    <Carousel>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/0001.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00001.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/0002.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00002.png" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00003.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00003.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00004.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00005.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00006.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img src="http://app.taxisurfr.com/review/00007.jpg" />
-                            <Carousel.Caption>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                    </Carousel>
+                        <div className="mui--text-headline">Read some of our reviews</div>
+                        <Carousel>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/0001.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00001.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/0002.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00002.png"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00003.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00003.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00004.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00005.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00006.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img src="http://app.taxisurfr.com/review/00007.jpg"/>
+                                <Carousel.Caption>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                        </Carousel>
                     </Panel>
                 </div>
                 <div>
@@ -162,7 +160,7 @@ class SharingList extends React.Component {
                             <div className="mui--text-title">Browse by clicking on the row</div>
                             <div style={hide}>
                                 <ContainerDimensions>
-                                    { ({width, height}) =>
+                                    {({width, height}) =>
                                         <div>
                                             <Table
                                                 onRowClick={this.selectRow}
