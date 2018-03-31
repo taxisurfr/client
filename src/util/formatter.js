@@ -1,46 +1,25 @@
 
-export function getRouteDescription(prices){
-    const price = getPrice(prices);
+export function getRouteDescription(price){
     return price ? price.startroute.name +' to ' + price.endroute.name : '';
 }
-export function getRouteLongDescription(prices){
-    const price = getPrice(prices);
-    var desc = '';
-    if (price){
-            desc = 'Direct from '+ price.startroute.name +' to ' + price.endroute.name+'.';
-    }
-    return desc;
+
+export function getFormatedPrice(price){
+    return price ? '$US' + price.cents / 100:'';
 }
 
-export function getFormatedPrice(prices){
-    console.log('prices:'+prices);
-    const price = getPrice(prices);
-    return price ? '$US' + prices[0].cents / 100:'';
-}
-
-export function getFormatedEndPrice(prices, booking){
-    const price = getPrice(prices);
-    return price ? '$US' + prices[0].cents / 100:'';
-}
-
-export function getFormatedRupeePrice(prices,shareAnnouncement){
-    const price = getPrice(prices);
+export function getFormatedRupeePrice(price,shareAnnouncement){
     return price  && !shareAnnouncement ? price.cents*154/100+' rupees': '';
 }
 
-function getPrice(prices) {
-    return prices && prices.length >0 ? prices[0]:null;
+export function isAirportPickup(price){
+    return price && price.startroute.name === 'COLOMBO AIRPORT'
 }
-
-export function getPickup(prices){
-
-    const price = getPrice(prices);
-    var isAiport = price.startroute.name === 'COLOMBO AIRPORT';
-
+export function getPickup(price){
+    var isAirport = isAirportPickup(price);
     return {
-        type: isAiport ? 'Flight No.'  : 'Pickup point',
-        typeHint: isAiport ? 'QR123.'  : 'Hotel Relax',
-        time: isAiport ? 'Landing time'  : 'Pickup time',
-        timeHint: isAiport ? '11:40am'  : '11:40am',
+        type: isAirport ? 'Flight No.'  : 'Pickup point',
+        typeHint: isAirport ? 'QR123.'  : 'Hotel Relax',
+        time: isAirport ? 'Landing time'  : 'Pickup time',
+        timeHint: isAirport ? '11:40am'  : '11:40am',
     }
 }

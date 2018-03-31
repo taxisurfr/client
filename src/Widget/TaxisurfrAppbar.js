@@ -4,18 +4,6 @@ import NavLink from '../util/NavLink'
 import FontAwesome from 'react-fontawesome'
 import Responsive from 'react-responsive';
 
-import
-{
-    getRouteDescription,
-    getRouteLongDescription,
-    getFormatedPrice,
-    getFormatedEndPrice,
-    getPickup,
-    getFormatedRupeePrice
-}
-    from '../util/formatter';
-
-
 class TaxisurfrAppbar extends Component {
     render() {
         const Desktop = ({children}) => <Responsive minWidth={768} children={children}/>;
@@ -84,7 +72,8 @@ class TaxisurfrAppbar extends Component {
             fontSize: 24
         }
 
-        const headline = getRouteDescription(this.props.prices);
+        var {price} =this.props;
+        var routeDescription =price ? price.startroute.name +' to ' + price.endroute.name : '';
 
         const base = 'http://localhost:3000/image/';
         return (
@@ -109,13 +98,13 @@ class TaxisurfrAppbar extends Component {
                                 <Desktop>
                                     <div>
                                         <div className="mui--text-display1 mui--text-left"
-                                             style={titleText}>{this.props.routeDescription}</div>
+                                             style={titleText}>{routeDescription}</div>
                                     </div>
                                 </Desktop>
                                 <Mobile>
                                     <div>
                                         <div className="mui--text-subhead mui--text-left"
-                                             style={headerTextMobile}>{this.props.routeDescription}</div>
+                                             style={headerTextMobile}>{routeDescription}</div>
                                     </div>
                                 </Mobile>
 

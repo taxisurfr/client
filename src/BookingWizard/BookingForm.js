@@ -42,12 +42,7 @@ import {
 
 import
 {
-    getRouteDescription,
-    getRouteLongDescription,
-    getFormatedPrice,
-    getFormatedEndPrice,
     getPickup,
-    getFormatedRupeePrice
 }
     from '../util/formatter';
 
@@ -70,11 +65,6 @@ class BookingForm extends Component {
         this.createShareRequest = this.createShareRequest.bind(this);
         this.paymentError = paymentError.bind(this);
         this.findRoute = findRoute.bind(this);
-        this.getRouteDescription = getRouteDescription.bind(this);
-        this.getRouteLongDescription = getRouteLongDescription.bind(this);
-        this.getFormatedPrice = getFormatedPrice.bind(this);
-        this.getFormatedEndPrice = getFormatedEndPrice.bind(this);
-        this.getFormatedRupeePrice = getFormatedRupeePrice.bind(this);
         this.getPickup = getPickup.bind(this);
         this.goSharingList = this.goSharingList.bind(this);
         this.createSession = this.createSession.bind(this);
@@ -227,16 +217,15 @@ class BookingForm extends Component {
 
 
     getHeadling(shareAnnouncement) {
-        if (this.props.prices) {
-            const routedesc = this.getRouteDescription(this.props.prices);
-            const price = shareAnnouncement ? '' : this.getFormatedPrice(this.props.prices);
-            //const priceToShare = this.getFormatedPrice(this.props.route, this.props.route.centsToJoin);
+       /* if (this.props.prices) {
+            const routedesc = this.getRouteDescription(this.props.price);
+            const price = shareAnnouncement ? '' : this.getFormatedPrice(this.props.price);
             if (this.props.shareId) {
                 return routedesc;
             } else {
                 return routedesc + '    ' + price;
             }
-        }
+        }*/
         return 'taxi transfers in Sri Lanka';
     }
 
@@ -271,24 +260,14 @@ class BookingForm extends Component {
             fontSize: 24
         }
         const headline = this.getHeadling(this.props.shareAnnouncement);
-        const rupee =
-            page === PAGE_SHARE_DETAILS_COLLECTION ||
-            page === PAGE_SHARE_ANNOUNCEMENT_DETAILS_COLLECTION
-                ? '' : this.getFormatedRupeePrice(this.props.prices, this.props.shareAnnouncement);
+
         document.title = headline;
-
-        const price = this.getFormatedPrice(this.props.prices);
-        const priceSharing = this.getFormatedPrice(this.props.prices);
-
-
-        const airportPickup = this.props.prices && this.props.prices.length > 0? this.props.prices[0].startroute.name === 'COLOMBO AIRPORT' : null;
 
         return (
 
             <div style={sectionStyle}>
                 <TaxisurfrAppbar
-                    routeDescription={this.getRouteDescription(this.props.prices)}
-                    rupee={rupee}
+                    price={this.props.price}
                     navigateHome={this.navigateHome}
                 />
                 {page === 1 && <Transport onSubmit={this.getSharingList}
@@ -305,31 +284,25 @@ class BookingForm extends Component {
                     announceShare={this.createNewSessionWithShareAnnouncement}
                     prices={this.props.prices}
                     onSubmit={this.createNewSession}
-                    routeShortDescription={this.getRouteDescription(this.props.prices)}
-                    routeLongDescription={this.getRouteLongDescription(this.props.prices)}
-                    price={price}
-                    rupee={rupee}
-                    priceSharing={priceSharing}
                 />}
                 {page === 3 && <BookingDetailsCollection previousPage={this.previousPage}
                                                          values={values}
                                                          onSubmit={this.createBooking}
-                                                         pickup={this.getPickup(this.props.prices)}
-                                                         airportPickup={airportPickup}
+                                                         pickup={this.getPickup(this.props.price)}
                                                          shareAnnouncement={this.props.shareAnnouncement}
 
 
                 />}
                 {page === 4 && <BookingDetailsShow
-                    pickup={this.getPickup(this.props.prices)}
-                    price={this.getFormatedEndPrice(this.props.prices, this.props.booking)}
+                    price={this.props.price}
                     booking={this.props.booking}
                     previousPage={this.previousPage}
-                    onSubmit={this.acceptDetails}/>}
+                    pickup={this.getPickup(this.props.price)}
+                    onSubmit={this.acceptDetails}/>
+                }
                 {page === PAGE_PAYMENT && <BookingPayment
                     stripeKey={this.props.stripeKey}
-                    description={this.getRouteDescription(this.props.prices)}
-                    price={this.getFormatedEndPrice(this.props.prices, this.props.booking)}
+                    price={this.props.price}
                     isFetchingPayment={this.props.isFetchingPayment}
                     booking={this.props.booking}
                     CCname={values.CCname}
@@ -339,14 +312,14 @@ class BookingForm extends Component {
                     paymentErrorText={this.props.paymentErrorText}
                 />}
                 {page === PAGE_SHARE_DETAILS_COLLECTION &&
-                <SharingDetailsCollection previousPage={this.goSharingList}
-                                          description={this.props.description}
-                                          priceToJoin={this.props.priceToJoin}
-                                          values={this.props.values}
-                                          onSubmit={this.createShareRequest}
-                                          value={this.startDate}
-                                          dateText={this.props.dateText}
-                                          pickup={this.getPickup(this.props.prices)}
+                <SharingDetailsCollection
+                    previousPage={this.goSharingList}
+                    description={this.props.description}
+                    priceToJoin={this.props.priceToJoin}
+                    values={this.props.values}
+                    onSubmit={this.createShareRequest}
+                    value={this.startDate}
+                    dateText={this.props.dateText}
 
                 />}
                 {page === PAGE_SHARE_ANNOUNCEMENT_DETAILS_COLLECTION &&
@@ -357,7 +330,6 @@ class BookingForm extends Component {
                                                       onSubmit={this.createShareRequest}
                                                       value={this.startDate}
                                                       dateText={this.props.dateText}
-                                                      pickup={this.getPickup(this.props.prices)}
 
                 />}
 
@@ -374,7 +346,6 @@ class BookingForm extends Component {
                 {page === 6 &&
                 <BookingConfirmation previousPage={this.previousPage}
                                      routeLink={routeLink}
-                                     airportPickup={airportPickup}
                 />}
 
                 <TaxisurfrFooter/>
@@ -382,6 +353,16 @@ class BookingForm extends Component {
         )
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 BookingForm.propTypes = {

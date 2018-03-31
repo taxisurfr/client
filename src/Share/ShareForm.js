@@ -34,7 +34,7 @@ import {
 
 import
 {
-    getRouteDescription, getFormatedPrice, getPickup
+    getPickup
 }
     from '../util/formatter';
 
@@ -46,8 +46,6 @@ class ShareForm extends Component {
         this.requestShare = this.requestShare.bind(this);
         this.createShareRequest = this.createShareRequest.bind(this);
         this.doshare = doshare.bind(this);
-        this.getRouteDescription = getRouteDescription.bind(this);
-        this.getFormatedPrice = getFormatedPrice.bind(this);
         this.getPickup = getPickup.bind(this);
         this.paymentError = paymentError.bind(this);
     }
@@ -92,7 +90,7 @@ class ShareForm extends Component {
         if (this.props.booking && this.props.booking.route) {
             const shareAnnouncement = this.props.booking.orderType === 'SHARE_ANNOUNCEMENT';
             const routedesc = 'taxi: ' +this.getRouteDescription(this.props.booking.route);
-            const price = shareAnnouncement ? '' :this.getFormatedPrice(this.props.booking.route.cents);
+            const price = shareAnnouncement ? '' :this.getFormatedPrice(this.props.booking.price);
             const priceToShare = this.getFormatedPrice(this.props.booking.route.centsToJoin);
             if (this.props.shareId) {
                 return routedesc;

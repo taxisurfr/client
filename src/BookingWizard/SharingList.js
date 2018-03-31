@@ -63,7 +63,6 @@ class SharingList extends React.Component {
         const show = {backgroundColor: 'HoneyDew'};
         const {handleSubmit, announceShare} = this.props;
         var sharingList = this.props.sharingList || null;
-        var {routeShortDescription, routeLongDescription, priceSharing} = this.props;
         var sharingListSize = ((sharingList === null || sharingList.getSize() === 0)) ? 0 : sharingList.getSize();
         var hide = {
             display: (sharingListSize === 0) ? 'none' : null

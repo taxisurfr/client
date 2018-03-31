@@ -45,8 +45,10 @@ class BookingPayment extends Component {
     }
 
     render() {
-        const {stripeKey, description, price, isFetchingPayment, previousPage} = this.props;
+        const {stripeKey, price, isFetchingPayment, previousPage} = this.props;
         window.Stripe.setPublishableKey(stripeKey);
+        var dollars = price ? '$US' + price.cents / 100:'';
+
 
         var style = {
             color: 'red'
@@ -117,7 +119,7 @@ class BookingPayment extends Component {
                                         <button type="button" className="previous" onClick={previousPage}>
                                             Previous
                                         </button>
-                                        <button disabled={isFetchingPayment} type="submit">Pay {price}</button>
+                                        <button disabled={isFetchingPayment} type="submit">Pay {dollars}</button>
                                         {isFetchingPayment && <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>}
                                     </div>
                                 </div>

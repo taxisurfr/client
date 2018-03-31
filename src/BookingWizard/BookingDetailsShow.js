@@ -29,6 +29,8 @@ const BookingDetailsShow = (props) => {
         border: 'none',
         backgroundColor: 'white'
     };
+    var dollars = price ? '$US' + price.cents / 100:'';
+
     return (
 
         <form onSubmit={handleSubmit}>
@@ -72,7 +74,7 @@ const BookingDetailsShow = (props) => {
                         <div style={noborder}>
                             <button type="button" className="previous" onClick={previousPage}>Previous
                             </button>
-                            <button type="submit" disabled={pristine || submitting}>Pay {price}</button>
+                            <button type="submit" disabled={pristine || submitting}>Pay {dollars}</button>
                         </div>
                     </div>
                 </Panel>
