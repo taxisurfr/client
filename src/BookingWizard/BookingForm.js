@@ -252,7 +252,7 @@ class BookingForm extends Component {
 
         const {values} = this.props;
         const link = this.props.booking ? this.props.booking.price.link : '';
-        const routeLink = 'https://app.taxisurfr.com/lka/' + link;
+        const routeLink = 'https://app.taxisurfr.com' + link;
         const s1 = {verticalAlign: 'middle'};
         const s2 = {textAlign: 'right'};
         var style = {
@@ -263,11 +263,13 @@ class BookingForm extends Component {
 
         document.title = headline;
 
+            var price = this.props.price ? this.props.price : (this.props.prices ? this.props.prices[0] : null);
         return (
+
 
             <div style={sectionStyle}>
                 <TaxisurfrAppbar
-                    price={this.props.price}
+                    price={price}
                     navigateHome={this.navigateHome}
                 />
                 {page === 1 && <Transport onSubmit={this.getSharingList}
@@ -315,7 +317,7 @@ class BookingForm extends Component {
                 <SharingDetailsCollection
                     previousPage={this.goSharingList}
                     description={this.props.description}
-                    priceToJoin={this.props.priceToJoin}
+                    pickup={getPickup(this.props.price)}
                     values={this.props.values}
                     onSubmit={this.createShareRequest}
                     value={this.startDate}

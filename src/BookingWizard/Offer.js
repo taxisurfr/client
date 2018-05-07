@@ -13,22 +13,16 @@ class BookingApp extends Component {
         var image = contractor ? contractor.address4:null;
 
         var dollars = price ? '$US' + price.cents / 100:'';
-        var rupees = price ? price.cents*154/100+' rupees': '';
+        var rupees = price ? (Number(price.cents*154/10000).toFixed(0))*100+' rupees': '';
         return (
             <div className="mui--text-left">
                 <Well bsSize="large">
                     <Grid>
                         <Row>
-                            <Col>
+                            <Col xs={6} md={3}>
                                 <h1><strong>{dollars}</strong></h1>
-                            </Col>
-                            <Col>
                                 <h2 bsSize="large">{rupees}</h2>
                             </Col>
-                        </Row>
-                    </Grid>
-                    <Grid>
-                        <Row>
                             <Col xs={6} md={3}>
 
                                 <Image href="#" alt="100x180" src={image} thumbnail/>

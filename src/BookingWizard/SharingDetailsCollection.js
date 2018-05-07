@@ -7,13 +7,14 @@ import validate from './validate'
 import {renderPassengerCountSelector} from '../util/render/renderPassengerCountSelector'
 import {renderSurfboardCountSelector} from '../util/render/renderSurfboardCountSelector'
 import {renderTextArea} from '../util/render/renderTextArea'
+import {getPickup} from "../util/formatter";
 
 const SharingDetailsCollection = (props) => {
     const show = {backgroundColor: 'HoneyDew'};
     const showWhiteBackground = {border: 'none'};
     const {description, priceToJoin, dateText, handleSubmit, previousPage, pickup, shareAnnouncement} = props;
-    const pickupLabel = "Your " + pickup.type;
-    const pickupTimeLabel = "Your " + pickup.time;
+    const pickupLabel = "Your " + props.pickup.type;
+    const pickupTimeLabel = "Your " + props.pickup.time;
     return (
         <form onSubmit={handleSubmit}>
             <Panel style={show}>
@@ -32,17 +33,14 @@ const SharingDetailsCollection = (props) => {
                         sharing works:
                         <br/>A taxi has been ordered and paid for on {dateText}.
                         <br/>The person who paid for the taxi might share it with you.
-                        <br/>Fill in the details below and these details will be sent to that person.
-                        <br/>When they agree, you will receive a message and you will be asked to pay the sharing price
-                        of {priceToJoin}.
-                        <br/>This amount will be refunded to the person who booked the taxi. <br/>Good luck!
+                        <br/>Fill in the details below and we will forward these to the person.
+                        <br/>If they are interested, they will get in contact directly.
+                        <br/>Good luck!
                     </div>}
 
                     <div className="mui--text-title mui--text-left">
                         <Field hint={dateText} component={renderReadonly}
                                label="Pickup date is"/>
-                        {!shareAnnouncement && <Field hint={priceToJoin} component={renderReadonly}
-                                                      label="Price to share"/>}
                     </div>
 
                     <div style={showWhiteBackground} className="mui--text-left">

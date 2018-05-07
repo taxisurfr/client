@@ -11,7 +11,9 @@ import {Label, Button, ControlLabel, FormControl, FormGroup} from 'react-bootstr
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
-const locations = ['AGALAWATTA',
+const locations = [
+    'COLOMBO AIRPORT',
+    'AGALAWATTA',
     'AHANGAMA', 'AHUNGALLA', 'AKKARAIPATTU', 'AKURANA', 'AKURESSA', 'ALAUWA', 'ALUTHGAMA', 'AMBALANGODA', 'AMBALANTHOTA', 'AMBATALE', 'AMBEPUSSA', 'AMPARAI', 'ANAMADUWA', 'ANDIGAMA', 'ANGODA', 'ANGULANA', 'ANURADHAPURA',
     'ARANAYAKE', 'ATTANAGALA', 'ATHTHIDIYA', 'ATHURUGIRIYA',
     'AWISSAWELLA', 'AMBAMPOLA', 'BADALGAMA', 'BADULLA', 'BAGAWANTHALAWA',
@@ -272,7 +274,7 @@ const locations = ['AGALAWATTA',
     'WIJERAMA', 'WALASMULLA', 'WATAWALA', 'WEERAWILA', 'WELIKANDA', 'WATADENIYA',
     'WATHTHEGAMA', 'WELISARA', 'YAKKALA', 'YATIYANTOTA', 'YALA',
     'ARUGAM BAY',
-    'COLOMBO AIRPORT'
+    'UNAWATUNA','YALA TISSAMAHARAMA','TANGALLE','BATIKALLO','POLUNARUWA','MIDIGAMA','HIKKADUWA','PASSIKUDA','KITULGALA'
 ];
 
 const renderCombobox = ({input, data, label, meta: {touched, error}}) =>
