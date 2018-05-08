@@ -5,15 +5,18 @@ class BookingApp extends Component {
 
 
     render() {
-        var price = this.props.price;
-        var contractor = price ? price.contractor : null;
-        var website = contractor ? contractor.address3:null;
-        var name = contractor ? contractor.name:null;
-        var facebook = contractor ? contractor.address2:null;
-        var image = contractor ? contractor.address4:null;
+        let price = this.props.price;
+        let contractor = price ? price.contractor : null;
+        let website = contractor ? contractor.address3:null;
+        let name = contractor ? contractor.name:null;
+        let facebook = contractor ? contractor.address2:null;
+        let image = contractor ? contractor.address4:null;
+        let isreturn = (price && price.return);
+        let isreturntext = ' ** return';
+        let returnstyle={backgroundColor: "#9bf442"};
 
-        var dollars = price ? '$US' + price.cents / 100:'';
-        var rupees = price ? (Number(price.cents*154/10000).toFixed(0))*100+' rupees': '';
+        let dollars = price ? '$US' + price.cents / 100:'';
+        let rupees = price ? (Number(price.cents*154/10000).toFixed(0))*100+' rupees': '';
         return (
             <div className="mui--text-left">
                 <Well bsSize="large">
@@ -22,6 +25,7 @@ class BookingApp extends Component {
                             <Col xs={6} md={3}>
                                 <h1><strong>{dollars}</strong></h1>
                                 <h2 bsSize="large">{rupees}</h2>
+                                {isreturn && <h2 style={returnstyle}>{isreturntext}</h2>}
                             </Col>
                             <Col xs={6} md={3}>
 

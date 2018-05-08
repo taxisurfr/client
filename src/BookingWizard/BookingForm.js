@@ -271,6 +271,7 @@ class BookingForm extends Component {
                 <TaxisurfrAppbar
                     price={price}
                     navigateHome={this.navigateHome}
+                    page={page}
                 />
                 {page === 1 && <Transport onSubmit={this.getSharingList}
                                           onPickupDropoffUpdate={this.onPickupDropoffUpdate}
@@ -288,6 +289,7 @@ class BookingForm extends Component {
                     onSubmit={this.createNewSession}
                 />}
                 {page === 3 && <BookingDetailsCollection previousPage={this.previousPage}
+                                                         price={this.props.price}
                                                          values={values}
                                                          onSubmit={this.createBooking}
                                                          pickup={this.getPickup(this.props.price)}

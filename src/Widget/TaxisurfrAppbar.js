@@ -17,7 +17,7 @@ class TaxisurfrAppbar extends Component {
         const titleText = {
             paddingTop: '24px',
             fontFamily: '"Lato",sans-serif',
-            fontSize: 42,
+            fontSize: 28,
             color: 'rgb(20, 215, 134)',
             marginLeft: '12%',
             fontFamily: 'Lato",sans-serif',
@@ -72,8 +72,10 @@ class TaxisurfrAppbar extends Component {
             fontSize: 24
         }
 
-        var {price} =this.props;
-        var routeDescription =price ? price.startroute.name +' to ' + price.endroute.name : '';
+        let {price} =this.props;
+        let showreturn = price && price.return && this.props.page >=3;
+        let routeReturn = showreturn ? ' -- return' : '';
+        let routeDescription =price ? price.startroute.name +' to ' + price.endroute.name + routeReturn : '';
 
         const base = 'http://localhost:3000/image/';
         return (

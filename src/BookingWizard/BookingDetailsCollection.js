@@ -38,6 +38,10 @@ class BookingDetailsCollection extends React.Component {
                     {!shareAnnouncement &&
                     <div className="mui--text-title mui--text-left">
                         Please fill in your details below to book your taxi.
+                        {this.props.price.return && <div>
+                        <div>This is a return route so simply put your return journey in the notes at the bottom.</div>
+                        <div>You can also tell provide the details after you have arrived.</div>
+                        </div>}
                         <br/>
                         </div>}
                             <Field name="date" label="Date of pickup" component={renderCalendar}/>
