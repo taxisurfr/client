@@ -3,14 +3,9 @@ import {connect} from 'react-redux'
 import ContactDetailsCollection from './ContactDetailsCollection'
 import ContactConfirmation from './ContactConfirmation'
 import '../BookingWizard/BookingApp.css';
-import TaxisurfrAppbar from '../Widget/TaxisurfrAppbar';
 import TaxisurfrFooter from '../Widget/TaxisurfrFooter';
 
-import {
-    fetchContactOnServer, showVerified,
-    PAGE_CONTACT,
-    PAGE_CONTACT_CONFIRMATION
-} from './actions'
+import {fetchContactOnServer, PAGE_CONTACT, PAGE_CONTACT_CONFIRMATION, showVerified} from './actions'
 
 class ContactForm extends Component {
     constructor(props) {

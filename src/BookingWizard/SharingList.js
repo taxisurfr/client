@@ -11,6 +11,7 @@ import {renderReadonly, renderConditions, renderDescription, renderPrice} from '
 
 import {Carousel, Well, Popover, Glyphicon, Grid, Row, Col, Thumbnail, Image} from 'react-bootstrap';
 import {Button, Tooltip, OverlayTrigger} from 'react-bootstrap';
+import HotelDetails from "./HotelDetails";
 
 const {Table, Column, Cell} = FixedDataTable;
 
@@ -60,7 +61,7 @@ class SharingList extends React.Component {
 
     render() {
         var prices = this.props.prices && this.props.prices.length > 0 ? this.props.prices : [];
-        const show = {backgroundColor: 'HoneyDew'};
+        const panelStyle = {backgroundColor: 'HoneyDew'};
         const {handleSubmit, announceShare} = this.props;
         var sharingList = this.props.sharingList || null;
         var sharingListSize = ((sharingList === null || sharingList.getSize() === 0)) ? 0 : sharingList.getSize();
@@ -71,7 +72,7 @@ class SharingList extends React.Component {
             <form onSubmit={handleSubmit}>
                 <div itemScope itemType="http://schema.org/Offer">
 
-                    <Panel style={show}>
+                    <Panel style={panelStyle}>
                     {
                         prices.map((price) => {
                             return <Offer
@@ -84,7 +85,7 @@ class SharingList extends React.Component {
                     </Panel>
                 </div>
                 <div>
-                    <Panel style={show}>
+                    <Panel style={panelStyle}>
                         <div className="mui--text-left">
                             <Field name="conditions" component={renderConditions}
                                    label="Conditions"/>
@@ -92,8 +93,21 @@ class SharingList extends React.Component {
                         </div>
                     </Panel>
                 </div>
-                <div className="mui--text-left">
-                    <Panel style={show}>
+                {this.props.hotels && <div>
+                    <Panel style={panelStyle}>
+                        {
+                            this.props.hotels.map((hotel) => {
+                                return <HotelDetails
+                                    hotel={hotel}
+                                    selectPrice={this.props.selectHotel}
+                                />;
+                            })
+                        }
+
+                    </Panel>
+                </div>}
+                {!this.props.hotel && <div className="mui--text-left">
+                    <Panel style={panelStyle}>
                         <div className="mui--text-headline">Read some of our reviews</div>
                         <Carousel>
                             <Carousel.Item>
@@ -148,10 +162,10 @@ class SharingList extends React.Component {
                             </Carousel.Item>
                         </Carousel>
                     </Panel>
-                </div>
-                <div>
+                </div>}
+                {!this.props.hotel && <div>
 
-                    {sharingListSize !== 0 && <Panel style={show}>
+                    {sharingListSize !== 0 && <Panel style={panelStyle}>
                         <div className="mui--text-left">
                             <div className="mui--text-headline">Want to share a taxi?</div>
                             <div className="mui--text-title">Here are some existing orders and share announcements
@@ -201,7 +215,7 @@ class SharingList extends React.Component {
                         </div>
                     </Panel>}
 
-                    {sharingListSize === 0 && <Panel style={show}>
+                    {sharingListSize === 0 && <Panel style={panelStyle}>
                         <div className="mui--text-left">
                             <div className="mui--text-title">Want to share but not yet ready to book and pay a taxi?
                                 Then simply create a share announcement.
@@ -209,7 +223,7 @@ class SharingList extends React.Component {
                             <button type="button" className="next" onClick={announceShare}>Announce share</button>
                         </div>
                     </Panel>}
-                </div>
+                </div>}
             </form>
         );
     }

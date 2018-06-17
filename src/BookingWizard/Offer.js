@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Carousel, Well, Popover, Glyphicon, Grid, Row, Col, Button, Image} from 'react-bootstrap';
 
-class BookingApp extends Component {
+class Offer extends Component {
 
 
     render() {
@@ -52,4 +52,4 @@ class BookingApp extends Component {
         );
     }
 }
-export default BookingApp;
+export default Offer;

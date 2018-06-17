@@ -3,6 +3,7 @@ import {
     RECEIVE_BOOKING,RECEIVE_SESSION,
     REQUEST_SHARINGDATA,
     RECEIVE_SHARINGDATA,
+    RECEIVE_ROUTE_FROM_LINK,
     REQUEST_SHARE,RECEIVE_SHARE,REGISTER_SHAREID,PAYMENT_ERROR,RECEIVE_RESORT,RECEIVE_SHARE_CMD,
     SET_PRICE_FOR_BOOKING,
     PAGE_SHARE_DETAILS_COLLECTION,
@@ -14,7 +15,7 @@ import {
 
 const routeMessage = 'Sorry about that. We do not have a quote for that route. Get in contact (Contact above right) and we will be happy to provide one.'
 function wizardReducer(state = {
-    page: 2, noRouteMessage:'',
+    page: -1, noRouteMessage:'',
 /*
     page: 4, noRouteMessage:'', route :{startroute:'xx', endroute:'yy', cents: 100}, booking: {dateText: 'ccc'}
 */
@@ -87,7 +88,18 @@ function wizardReducer(state = {
                 sharingList: action.sharingList,
                 stripeKey: action.stripeKey,
                 noRouteMessage: action.route ===null && action.showNoRouteMessage? routeMessage : null,
-                page: action.prices && action.prices.length >0 ? 2 : 1
+                page: action.prices && action.prices.length >0 ? 2 : action.hotel ? 0 : 1,
+            });
+        case RECEIVE_ROUTE_FROM_LINK:
+            return Object.assign({}, state, {
+                isFetchingSharingData: false,
+                hotels: action.hotels,
+                prices: action.prices,
+                sharingList: action.sharingList,
+                stripeKey: action.stripeKey,
+                noRouteMessage: action.route ===null && action.showNoRouteMessage? routeMessage : null,
+                page: action.prices && action.prices.length >0 ? 2 : action.hotel ? 0 : 1,
+                hotel: action.hotel
             });
        case SET_PRICE_FOR_BOOKING:
             return Object.assign({}, state, {

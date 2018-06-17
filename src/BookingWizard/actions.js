@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import util from 'util';
-import {getUrl} from '../util/network';
-import {getMethod} from '../util/network';
+import {getMethod, getUrl} from '../util/network';
 import TableStore from './../util/TableStore';
 import Moment from 'moment';
 import ReactPixel from 'react-facebook-pixel';
@@ -17,6 +16,7 @@ export const RECEIVE_SESSION = 'RECEIVE_SESSION';
 export const SET_PICKUP_DROPOFF = 'SET_PICKUP_DROPOFF';
 export const REQUEST_SHARINGDATA = 'REQUEST_SHARINGDATA';
 export const RECEIVE_SHARINGDATA = 'RECEIVE_SHARINGDATA';
+export const RECEIVE_ROUTE_FROM_LINK = 'RECEIVE_ROUTE_FROM_LINK';
 export const RECEIVE_FORMDATA = 'RECEIVE_FORMDATA';
 export const REQUEST_SHARE = 'REQUEST_SHARE'
 export const RECEIVE_SHARE = 'RECEIVE_SHARE'
@@ -202,8 +202,7 @@ export function findRoute(link,src) {
         fetch(getUrl('routefromlink'), getMethod('POST', body))
             .then((response) => response.json())
             .then((responseJson) => {
-                dispatch(receiveSharingData(false, responseJson)),
-                    getSessionOnServer(link, null, null, src)
+                dispatch(receiveRouteFromLink(false, responseJson))
             })
             .catch((error) => {
                 // console.error(error);
@@ -321,11 +320,27 @@ function receiveSharingData(forward, json) {
         type: RECEIVE_SHARINGDATA,
         sharingList: json.sharingList ? new TableStore(json.sharingList): null,
         prices: json.prices,
+        hotels: json.hotels,
         forward: forward,
         showNoRouteMessage: json.showNoRouteMessage,
         stripeKey: json.stripeKey
     }
 }
+
+function receiveRouteFromLink(forward, json) {
+
+    return {
+        type: RECEIVE_ROUTE_FROM_LINK,
+        sharingList: json.sharingList ? new TableStore(json.sharingList): null,
+        prices: json.prices,
+        hotel: json.hotel,
+        hotels: json.hotels,
+        forward: forward,
+        showNoRouteMessage: json.showNoRouteMessage,
+        stripeKey: json.stripeKey
+    }
+}
+
 
 function shouldFetchSharingData(state) {
     const isFetching = state.sharingList

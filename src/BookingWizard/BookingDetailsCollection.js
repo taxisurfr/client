@@ -45,7 +45,6 @@ class BookingDetailsCollection extends React.Component {
                         <br/>
                         </div>}
                             <Field name="date" label="Date of pickup" component={renderCalendar}/>
-                            <Field name="date" label="Date of shuttle" component={renderShuttleCalendar}/>
                             <Field name="flightNo" id="flightNo" hint={pickup.typeHint} component={renderInput}
                                label={pickup.type}/>
                             <Field name="landingTime" label={pickup.time}

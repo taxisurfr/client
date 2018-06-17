@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Transport from './Transport'
+import Hotel from './Hotel'
 import SharingList from './SharingList'
 import BookingDetailsCollection from './BookingDetailsCollection'
 import SharingDetailsCollection from './SharingDetailsCollection'
@@ -13,38 +14,34 @@ import ShareAnnouncementConfirmation from './ShareAnnouncementConfirmation'
 import {connect} from 'react-redux'
 import TaxisurfrAppbar from '../Widget/TaxisurfrAppbar';
 import TaxisurfrFooter from '../Widget/TaxisurfrFooter';
-import {Redirect} from 'react-router-dom'
 import ReactPixel from 'react-facebook-pixel';
+import {Image} from 'react-bootstrap';
 
 import {
-    setPriceForBooking,
-    setPickupOrDropoff,
-    nextPageAction,
-    homePageAction,
-    setPageAction,
-    previousPageAction,
-    fetchPaymentIfNeeded,
     fetchBooking,
     fetchNewSession,
+    fetchPaymentIfNeeded,
     fetchSharingDataIfNeeded,
-    setShareId,
     fetchSharingRequest,
-    paymentError,
     findRoute,
-    PAGE_SHARE_DETAILS_COLLECTION,
-    PAGE_SHARE_REQUEST_CONFIRMATION,
+    homePageAction,
+    nextPageAction,
+    PAGE_PAYMENT,
     PAGE_SHARE_ANNOUNCEMENT_CONFIRMATION,
     PAGE_SHARE_ANNOUNCEMENT_DETAILS_COLLECTION,
     PAGE_SHARE_ANNOUNCEMENT_REQUEST_CONFIRMATION,
-    PAGE_PAYMENT,
-    PAGE_SHARE_PAYMENT
+    PAGE_SHARE_DETAILS_COLLECTION,
+    PAGE_SHARE_PAYMENT,
+    PAGE_SHARE_REQUEST_CONFIRMATION,
+    paymentError,
+    previousPageAction,
+    setPageAction,
+    setPickupOrDropoff,
+    setPriceForBooking,
+    setShareId
 } from './actions'
 
-import
-{
-    getPickup,
-}
-    from '../util/formatter';
+import {getPickup,} from '../util/formatter';
 
 class BookingForm extends Component {
     constructor(props) {
@@ -70,11 +67,18 @@ class BookingForm extends Component {
         this.createSession = this.createSession.bind(this);
         this.onPickupDropoffUpdate = this.onPickupDropoffUpdate.bind(this);
         this.selectPrice = this.selectPrice.bind(this);
+        this.setHotelLocation = this.setHotelLocation.bind(this);
     }
 
     selectPrice(price) {
         const {dispatch} = this.props;
         dispatch(setPriceForBooking(price));
+    }
+
+    selectHotel(hotel) {
+        const {dispatch} = this.props;
+
+        //dispatch(setPriceForBooking(price));
     }
 
     acceptDetails() {
@@ -93,10 +97,11 @@ class BookingForm extends Component {
         dispatch(setPageAction(PAGE_PAYMENT));
     }
 
-    onPickupDropoffUpdate(pickupDropoff,value){
+    onPickupDropoffUpdate(pickupDropoff, value) {
         const {dispatch} = this.props;
-        dispatch(setPickupOrDropoff(pickupDropoff,value));
+        dispatch(setPickupOrDropoff(pickupDropoff, value));
     }
+
     getSharingList() {
 
 
@@ -217,19 +222,27 @@ class BookingForm extends Component {
 
 
     getHeadling(shareAnnouncement) {
-       /* if (this.props.prices) {
-            const routedesc = this.getRouteDescription(this.props.price);
-            const price = shareAnnouncement ? '' : this.getFormatedPrice(this.props.price);
-            if (this.props.shareId) {
-                return routedesc;
-            } else {
-                return routedesc + '    ' + price;
-            }
-        }*/
+        /* if (this.props.prices) {
+             const routedesc = this.getRouteDescription(this.props.price);
+             const price = shareAnnouncement ? '' : this.getFormatedPrice(this.props.price);
+             if (this.props.shareId) {
+                 return routedesc;
+             } else {
+                 return routedesc + '    ' + price;
+             }
+         }*/
         return 'taxi transfers in Sri Lanka';
     }
 
+    setHotelLocation = (hotel) => {
+        this.onPickupDropoffUpdate('DROPOFF', hotel.location.name);
+    }
+
+
+
     render() {
+
+
 
         const base = 'https://app.taxisurfr.com/review/';
         const sectionStyle = {
@@ -245,9 +258,9 @@ class BookingForm extends Component {
         var target = (match && match.params && match.params[0]) ? match.params[0] : null;
 
         if (target) {
-            target = target.replace('/lka/','');
+            target = target.replace('/lka/', '');
             this.props.match.params[0] = null;
-            dispatch(findRoute(target, 'srcfixme'));
+            dispatch(findRoute(target, this.props.location.search));
         }
 
         const {values} = this.props;
@@ -263,30 +276,55 @@ class BookingForm extends Component {
 
         document.title = headline;
 
-            var price = this.props.price ? this.props.price : (this.props.prices ? this.props.prices[0] : null);
+        var price = this.props.price ? this.props.price : (this.props.prices ? this.props.prices[0] : null);
+
+        const imageStyle = {
+
+            height: '115px',
+            float: 'left',
+            display: 'block',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        };
+
         return (
 
 
             <div style={sectionStyle}>
+                <Image href="#" style={imageStyle} alt='taxisurfr' src='/image/fb_hi.png'/>
+
                 <TaxisurfrAppbar
                     price={price}
                     navigateHome={this.navigateHome}
                     page={page}
+                    hotel={this.props.hotel}
                 />
-                {page === 1 && <Transport onSubmit={this.getSharingList}
+                {page === 0 && <Hotel onSubmit={this.getSharingList}
+                                      setHotelLocation={this.setHotelLocation}
                                           onPickupDropoffUpdate={this.onPickupDropoffUpdate}
                                           noRouteMessage={this.props.noRouteMessage}
                                           startlocations={this.props.startlocations}
                                           endlocations={this.props.endlocations}
+                                      hotel={this.props.hotel}
+                />}
+                {page === 1 && <Transport onSubmit={this.getSharingList}
+                                             onPickupDropoffUpdate={this.onPickupDropoffUpdate}
+                                             noRouteMessage={this.props.noRouteMessage}
+                                             startlocations={this.props.startlocations}
+                                             endlocations={this.props.endlocations}
+                                      hotel={this.props.hotel}
                 />}
                 {page === 2 && <SharingList
+                    selectHotel={this.selectHotel}
                     selectPrice={this.selectPrice}
                     onSelectShare={this.requestShare}
                     sharingList={this.props.sharingList}
                     previousPage={this.previousPage}
                     announceShare={this.createNewSessionWithShareAnnouncement}
                     prices={this.props.prices}
+                    hotels={this.props.hotels}
                     onSubmit={this.createNewSession}
+                    hotel={this.props.hotel}
                 />}
                 {page === 3 && <BookingDetailsCollection previousPage={this.previousPage}
                                                          price={this.props.price}
@@ -294,6 +332,7 @@ class BookingForm extends Component {
                                                          onSubmit={this.createBooking}
                                                          pickup={this.getPickup(this.props.price)}
                                                          shareAnnouncement={this.props.shareAnnouncement}
+                                      hotel={this.props.hotel}
 
 
                 />}
@@ -302,6 +341,7 @@ class BookingForm extends Component {
                     booking={this.props.booking}
                     previousPage={this.previousPage}
                     pickup={this.getPickup(this.props.price)}
+                    hotel={this.props.hotel}
                     onSubmit={this.acceptDetails}/>
                 }
                 {page === PAGE_PAYMENT && <BookingPayment
@@ -313,7 +353,10 @@ class BookingForm extends Component {
                     previousPage={this.previousPage}
                     payment={this.payment}
                     paymentError={this.paymentError}
+                    hotel={this.props.hotel}
                     paymentErrorText={this.props.paymentErrorText}
+
+
                 />}
                 {page === PAGE_SHARE_DETAILS_COLLECTION &&
                 <SharingDetailsCollection
@@ -353,20 +396,11 @@ class BookingForm extends Component {
                 />}
 
                 <TaxisurfrFooter/>
+
             </div>
         )
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 BookingForm.propTypes = {
@@ -375,7 +409,8 @@ BookingForm.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const headline ='headline';
+    const headline = 'headline';
+    const {hotel} = state.wizardReducer;
     const {pickup} = state.wizardReducer;
     const {dropoff} = state.wizardReducer;
     const {country} = state.wizardReducer;
@@ -385,6 +420,7 @@ function mapStateToProps(state) {
     const {shareId} = state.wizardReducer;
     const {sharingList} = state.wizardReducer || null;
     const {prices} = state.wizardReducer;
+    const {hotels} = state.wizardReducer;
     const {price} = state.wizardReducer;
     const {booking} = state.wizardReducer;
     const {dateText} = state.wizardReducer;
@@ -408,8 +444,10 @@ function mapStateToProps(state) {
     };
 
     return {
+        hotel,
+        hotels,
         headline,
-        pickup,dropoff,
+        pickup, dropoff,
         page,
         shareId,
         bookingId,

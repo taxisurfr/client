@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import Appbar from 'muicss/lib/react/appbar';
 import NavLink from '../util/NavLink'
-import FontAwesome from 'react-fontawesome'
 import Responsive from 'react-responsive';
+import {Carousel, Well, Popover, Glyphicon, Grid, Row, Col, Button, Image} from 'react-bootstrap';
 
 class TaxisurfrAppbar extends Component {
     render() {
@@ -14,28 +14,38 @@ class TaxisurfrAppbar extends Component {
             paddingRight: '0px'
         };
 
+        const imageStyle = {
+            height: '115px',
+            float: 'left'
+        };
+
+        const routeText = {
+            paddingTop: '24px',
+            fontSize: 28,
+            color: 'rgb(20, 215, 134)'
+        };
+
+        const routeTextMobile = {
+            paddingTop: '24px',
+            fontSize: 28,
+            color: 'rgb(20, 215, 134)',
+        };
+
         const titleText = {
             paddingTop: '24px',
             fontFamily: '"Lato",sans-serif',
             fontSize: 28,
             color: 'rgb(20, 215, 134)',
-            marginLeft: '12%',
-            fontFamily: 'Lato",sans-serif',
-            fontStyle: 'normal',
-            fontWeight: '700',
-            letterSpacingx: '-0.035em'
+            paddingLeft: '50%',
         };
+
 
         const titleTextMobile = {
             paddingTop: '20px',
             fontFamily: '"Lato",sans-serif',
-            fontSize: 32,
+            fontSize: 18,
             color: 'rgb(20, 215, 134)',
-            marginLeft: '12%',
-            fontFamily: 'Lato",sans-serif',
-            fontStyle: 'normal',
-            fontWeight: '700',
-            letterSpacingx: '-0.035em'
+            marginLeft: '0%',
         };
 
         const headerText = {
@@ -66,65 +76,43 @@ class TaxisurfrAppbar extends Component {
         };
 
         const s1 = {verticalAlign: 'middle'};
-        const s2 = {textAlign: 'right', color: 'black',paddingRight: '5px'};
+        const s2 = {color: 'rgb(20, 215, 134)',fontSize: 24};
         var style = {
             color: 'white',
             fontSize: 24
         }
 
+        let left = {
+            float: 'left'
+        }
+
         let {price} =this.props;
+        let {hotel} =this.props;
         let showreturn = price && price.return && this.props.page >=3;
         let routeReturn = showreturn ? ' -- return' : '';
-        let routeDescription =price ? price.startroute.name +' to ' + price.endroute.name + routeReturn : '';
-
+        let hotelPresent = hotel ? true : false;
+        let routeDescription =price ? price.startroute.name +' to ' + (hotel ? hotel.name : price.endroute.name) + routeReturn : '';
+        let hideTaxisurfr = routeDescription && routeDescription.length > 0;
         const base = 'http://localhost:3000/image/';
         return (
             <div style={removePadding}>
                 <Appbar style={clr}>
-                    <table width="100%">
-                        <tbody>
-                        <tr style={s1}>
-                            <td className="mui--text-left">
-                                <Desktop>
-                                    <div>
-                                        <div style={titleText}>taxisurfr</div>
-                                    </div>
-                                </Desktop>
-                                <Mobile>
-                                    <div>
-                                        <div style={titleTextMobile}>taxisurfr</div>
-                                    </div>
-                                </Mobile>
-                            </td>
-                            <td className="mui--appbar-height">
-                                <Desktop>
-                                    <div>
-                                        <div className="mui--text-display1 mui--text-left"
-                                             style={titleText}>{routeDescription}</div>
-                                    </div>
-                                </Desktop>
-                                <Mobile>
-                                    <div>
-                                        <div className="mui--text-subhead mui--text-left"
-                                             style={headerTextMobile}>{routeDescription}</div>
-                                    </div>
-                                </Mobile>
-
-                            </td>
-                            <Desktop>
-                                <td className="mui--appbar-height" style={s2}><NavLink
-                                    className="mui--text-title mui--text-right" style={s2}
-                                    to="/contact">Contact</NavLink>
-                                </td>
-                            </Desktop>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <Desktop>
+                        <div>
+                            <div className="mui--text-display1 mui--text-center"
+                                 style={routeText}>{routeDescription}</div>
+                        </div>
+                    </Desktop>
+                    <Mobile>
+                        <div>
+                            <div className="mui--text-subhead mui--text-left"
+                                 style={headerTextMobile}>{routeDescription}</div>
+                        </div>
+                    </Mobile>
                 </Appbar>
             </div>
         )
     }
 }
-
 
 export default TaxisurfrAppbar
