@@ -202,7 +202,8 @@ export function findRoute(link,src) {
         fetch(getUrl('routefromlink'), getMethod('POST', body))
             .then((response) => response.json())
             .then((responseJson) => {
-                dispatch(receiveRouteFromLink(false, responseJson))
+                dispatch(receiveRouteFromLink(false, responseJson)),
+                    getSessionOnServer(link, null, null, src)
             })
             .catch((error) => {
                 // console.error(error);

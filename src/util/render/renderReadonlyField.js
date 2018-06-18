@@ -33,7 +33,7 @@ export const renderConditions = ({hint, label, type}) => (
                 <tr>
                     <td>
                         <i className="fa fa-plus"/><span
-                        className="mui--text-title"> Super sharing function (see below).</span>
+                        className="mui--text-title"> Super taxi sharing function.</span>
                     </td>
                 </tr>
                 </tbody>}

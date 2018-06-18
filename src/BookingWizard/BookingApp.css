@@ -1,6 +1,7 @@
 .BookingApp {
   border-radius: 0px;
   text-align: center;
+  font-family: 'Roboto', sans-serif
 }
 .BookingApp-border {
   padding: 0px;
