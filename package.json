@@ -84,7 +84,8 @@
     "redux-form": "^6.6.1",
     "redux-intl": "^1.0.1",
     "redux-logger": "^3.0.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "trust-pilot-react": "^1.0.0"
   },
   "scripts": {
     "start": "node server.js",

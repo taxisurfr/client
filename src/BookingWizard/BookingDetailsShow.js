@@ -8,7 +8,7 @@ import ContainerDimensions from 'react-container-dimensions'
 import Panel from 'muicss/lib/react/panel';
 
 const BookingDetailsShow = (props) => {
-    const {booking, description, price, handleSubmit, pristine, previousPage, submitting, pickup} = props;
+    const {booking, description, price, handleSubmit, pristine, previousPage, submitting, pickup,currency,exchangeRate} = props;
     const rows = [
         ['Date', booking.dateText],
         ['Name', booking.name],
@@ -29,7 +29,8 @@ const BookingDetailsShow = (props) => {
         border: 'none',
         backgroundColor: 'white'
     };
-    var dollars = price ? '$US' + price.cents / 100:'';
+    let customerPrice = price ? Number(price.cents * exchangeRate).toFixed(2) : null;
+    let customerCurrency = customerPrice ? currency + ' ' +customerPrice:'';
 
     return (
 
@@ -74,7 +75,7 @@ const BookingDetailsShow = (props) => {
                         <div style={noborder}>
                             <button type="button" className="previous" onClick={previousPage}>Previous
                             </button>
-                            <button type="submit" disabled={pristine || submitting}>Pay {dollars}</button>
+                            <button type="submit" disabled={pristine || submitting}>Pay {customerCurrency}</button>
                         </div>
                     </div>
                 </Panel>

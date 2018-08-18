@@ -14,17 +14,18 @@ class Offer extends Component {
         let isreturn = (price && price.return);
         let isreturntext = ' ** return';
         let returnstyle={backgroundColor: "#9bf442"};
-
-        let dollars = price ? '$US' + price.cents / 100:'';
-        let rupees = price ? (Number(price.cents*154/10000).toFixed(0))*100+' rupees': '';
+        let customerPrice = price ? Number(price.cents * this.props.exchangeRate).toFixed(2) : null;
+        let customerCurrency = customerPrice ? this.props.currency + ' ' +customerPrice:'';
+        let rupees = price ? price.cents +' rupees': '';
+        //let rupees = price ? (Number(price.cents*154/10000).toFixed(0))*100+' rupees': '';
         return (
             <div className="mui--text-left">
                 <Well bsSize="large">
                     <Grid>
                         <Row>
                             <Col xs={6} md={3}>
-                                <h1><strong>{dollars}</strong></h1>
                                 <h2 bsSize="large">{rupees}</h2>
+                                <h1><strong>{customerCurrency}</strong></h1>
                                 {isreturn && <h2 style={returnstyle}>{isreturntext}</h2>}
                             </Col>
                             <Col xs={6} md={3}>

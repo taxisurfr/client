@@ -202,8 +202,7 @@ export function findRoute(link,src) {
         fetch(getUrl('routefromlink'), getMethod('POST', body))
             .then((response) => response.json())
             .then((responseJson) => {
-                dispatch(receiveRouteFromLink(false, responseJson)),
-                    getSessionOnServer(link, null, null, src)
+                dispatch(receiveRouteFromLink(false, responseJson))
             })
             .catch((error) => {
                 // console.error(error);
@@ -212,7 +211,7 @@ export function findRoute(link,src) {
     }
 }
 
-function getPaymentOnServer(token, bookingId, share) {
+function getPaymentOnServer(token, bookingId,share) {
     util.inspect(token, {showHidden: true, depth: null});
     var body = JSON.stringify({
         token: token,
@@ -338,7 +337,9 @@ function receiveRouteFromLink(forward, json) {
         hotels: json.hotels,
         forward: forward,
         showNoRouteMessage: json.showNoRouteMessage,
-        stripeKey: json.stripeKey
+        stripeKey: json.stripeKey,
+        currency:json.currency,
+        exchangeRate:json.exchangeRate
     }
 }
 

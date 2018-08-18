@@ -76,6 +76,8 @@ class SharingList extends React.Component {
                     {
                         prices.map((price) => {
                             return <Offer
+                                exchangeRate={this.props.exchangeRate}
+                                currency={this.props.currency}
                                 price={price}
                                 selectPrice={this.props.selectPrice}
                             />;
@@ -108,8 +110,19 @@ class SharingList extends React.Component {
                 </div>}
                 {!this.props.hotel && <div className="mui--text-left">
                     <Panel style={panelStyle}>
-                        <div className="mui--text-headline">Read some of our reviews</div>
-                        <Carousel>
+                        <div >
+                            <Glyphicon glyph="star"/>
+                            <Glyphicon glyph="star"/>
+                            <Glyphicon glyph="star"/>
+                            <Glyphicon glyph="star"/>
+                            <Glyphicon glyph="star"/>
+                        </div>
+                        <div className="trustpilot-widget" data-locale="en-US"
+                             data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="5b40ab6b266600000141c164"
+                             data-style-height="24px" data-style-width="100%" data-theme="light">
+                            <a href="https://www.trustpilot.com/review/taxisurfr.com" target="_blank">Read our reviews</a>
+                        </div>
+                       {/* <Carousel>
                             <Carousel.Item>
                                 <img src="http://app.taxisurfr.com/review/0001.jpg"/>
                                 <Carousel.Caption>
@@ -160,7 +173,7 @@ class SharingList extends React.Component {
                                 <Carousel.Caption>
                                 </Carousel.Caption>
                             </Carousel.Item>
-                        </Carousel>
+                        </Carousel>*/}
                     </Panel>
                 </div>}
                 {!this.props.hotel && <div>

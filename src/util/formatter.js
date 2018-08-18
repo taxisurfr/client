@@ -8,7 +8,7 @@ export function getFormatedPrice(price){
 }
 
 export function getFormatedRupeePrice(price,shareAnnouncement){
-    return price  && !shareAnnouncement ? price.cents*154/100+' rupees': '';
+    return price  && !shareAnnouncement ? price.cents*154/100+' rupeesx': '';
 }
 
 export function isAirportPickup(price){

@@ -45,7 +45,7 @@ class BookingPayment extends Component {
     }
 
     render() {
-        const {stripeKey, price, isFetchingPayment, previousPage} = this.props;
+        const {stripeKey, price, isFetchingPayment, previousPage,currency,exchangeRate} = this.props;
         window.Stripe.setPublishableKey(stripeKey);
         var dollars = price ? '$US' + price.cents / 100:'';
 
@@ -55,6 +55,9 @@ class BookingPayment extends Component {
         };
         const show = {backgroundColor: 'HoneyDew'};
         const removeBorder = {border: 'none'};
+
+        let customerPrice = price ? Number(price.cents * exchangeRate).toFixed(2) : null;
+        let customerCurrency = customerPrice ? currency + ' ' +customerPrice:'';
 
         return (
             <div>
@@ -119,7 +122,7 @@ class BookingPayment extends Component {
                                         <button type="button" className="previous" onClick={previousPage}>
                                             Previous
                                         </button>
-                                        <button disabled={isFetchingPayment} type="submit">Pay {dollars}</button>
+                                        <button disabled={isFetchingPayment} type="submit">Pay {customerCurrency}</button>
                                         {isFetchingPayment && <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>}
                                     </div>
                                 </div>

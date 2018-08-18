@@ -10,7 +10,10 @@ import TaxisurfrYoutube from "../Widget/TaxisurfrYoutube";
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import TaxisurfrIntro from "./TaxisurfrIntro";
+import {locations} from './Locations'
+import {Carousel, Well, Popover, Glyphicon, Grid, Row, Col, Thumbnail, Image} from 'react-bootstrap';
 
+/*
 const locations = [
     'COLOMBO AIRPORT',
     'AGALAWATTA',
@@ -276,6 +279,7 @@ const locations = [
     'ARUGAM BAY',
     'UNAWATUNA','YALA TISSAMAHARAMA','TANGALLE','BATIKALLO','POLUNARUWA','MIDIGAMA','HIKKADUWA','PASSIKUDA','KITULGALA'
 ];
+*/
 
 const renderCombobox = ({input, data, label, meta: {touched, error}}) =>
     <div style={noborder}>
@@ -397,12 +401,25 @@ class Transport extends React.Component {
                     <div>
                         <Panel style={show}>
                             <div className="mui--text-left mui--text-title">
+                                <div >
+                                    <Glyphicon glyph="star"/>
+                                    <Glyphicon glyph="star"/>
+                                    <Glyphicon glyph="star"/>
+                                    <Glyphicon glyph="star"/>
+                                    <Glyphicon glyph="star"/>
+                                </div>
+                                <div className="trustpilot-widget" data-locale="en-US"
+                                     data-template-id="5419b6a8b0d04a076446a9ad" data-businessunit-id="5b40ab6b266600000141c164"
+                                     data-style-height="24px" data-style-width="100%" data-theme="light">
+                                    <a href="https://www.trustpilot.com/review/taxisurfr.com" target="_blank">Read our reviews</a>
+                                </div>
+{/*
                                 <TaxisurfrYoutube/>
+*/}
                                 <h2>Useful Links</h2>
                                 <div>
                                     <a href="http://arugam.info" target="_blank">Arugam Info</a>
                                     <br/>
-                                    <a href="http://www.sanjutravels.com/" target="_blank">Sanju Travels</a>
                                 </div>
                             </div>
                         </Panel>

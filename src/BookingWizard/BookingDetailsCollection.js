@@ -40,7 +40,7 @@ class BookingDetailsCollection extends React.Component {
                         Please fill in your details below to book your taxi.
                         {this.props.price.return && <div>
                         <div>This is a return route so simply put your return journey in the notes at the bottom.</div>
-                        <div>You can also tell provide the details after you have arrived.</div>
+                        <div>You can also give the details or your return trip to the driver after you have arrived.</div>
                         </div>}
                         <br/>
                         </div>}

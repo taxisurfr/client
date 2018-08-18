@@ -99,7 +99,9 @@ function wizardReducer(state = {
                 stripeKey: action.stripeKey,
                 noRouteMessage: action.route ===null && action.showNoRouteMessage? routeMessage : null,
                 page: action.prices && action.prices.length >0 ? 2 : action.hotel ? 0 : 1,
-                hotel: action.hotel
+                hotel: action.hotel,
+                currency: action.currency,
+                exchangeRate: action.exchangeRate
             });
        case SET_PRICE_FOR_BOOKING:
             return Object.assign({}, state, {

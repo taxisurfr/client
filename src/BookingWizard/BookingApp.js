@@ -16,7 +16,8 @@ class BookingApp extends Component {
             var parsed = queryString.parse(location.search);
             src = parsed.s_;
         }
-        getSessionOnServer('base', null, null, src);
+        //fixme is this necessary?
+        //getSessionOnServer('base', null, null, src);
 
         const base = 'https://app.taxisurfr.com/review/';
         const sectionStyle_ = {

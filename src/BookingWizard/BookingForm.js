@@ -103,18 +103,19 @@ class BookingForm extends Component {
     }
 
     getSharingList() {
-
-
-        const {dispatch} = this.props;
         var {pickup} = this.props;
         var {dropoff} = this.props;
+        pickup = pickup.split(' ').join('-').toLowerCase();
+        dropoff = dropoff.split(' ').join('-').toLowerCase();
+        this.props.history.push('/taxi-'+pickup+'--'+dropoff);
+        const {dispatch} = this.props;
         ReactPixel.track('Search', {pickup, dropoff});
         dispatch(fetchSharingDataIfNeeded(pickup, dropoff));
     }
 
     payment(token) {
         const {dispatch} = this.props;
-        dispatch(fetchPaymentIfNeeded(token, this.props.booking.id), false);
+        dispatch(fetchPaymentIfNeeded(token, this.props.booking.id, false));
     }
 
     paymentForShare(token) {
@@ -165,7 +166,9 @@ class BookingForm extends Component {
             surfboards: values.surfboards || 0,
             requirements: values.requirements,
             shareWanted: values.shareWanted,
-            announceShare: this.props.shareAnnouncement
+            announceShare: this.props.shareAnnouncement,
+            currency: this.props.currency,
+            exchangeRate: this.props.exchangeRate
         };
         ReactPixel.track('AddToCart', booking);
         dispatch(fetchBooking(booking));
@@ -306,6 +309,7 @@ class BookingForm extends Component {
                                           startlocations={this.props.startlocations}
                                           endlocations={this.props.endlocations}
                                       hotel={this.props.hotel}
+                                      currency={this.props.currency}
                 />}
                 {page === 1 && <Transport onSubmit={this.getSharingList}
                                              onPickupDropoffUpdate={this.onPickupDropoffUpdate}
@@ -325,6 +329,8 @@ class BookingForm extends Component {
                     hotels={this.props.hotels}
                     onSubmit={this.createNewSession}
                     hotel={this.props.hotel}
+                    currency={this.props.currency}
+                    exchangeRate={this.props.exchangeRate}
                 />}
                 {page === 3 && <BookingDetailsCollection previousPage={this.previousPage}
                                                          price={this.props.price}
@@ -342,11 +348,15 @@ class BookingForm extends Component {
                     previousPage={this.previousPage}
                     pickup={this.getPickup(this.props.price)}
                     hotel={this.props.hotel}
+                    currency={this.props.currency}
+                    exchangeRate={this.props.exchangeRate}
                     onSubmit={this.acceptDetails}/>
                 }
                 {page === PAGE_PAYMENT && <BookingPayment
                     stripeKey={this.props.stripeKey}
                     price={this.props.price}
+                    currency={this.props.currency}
+                    exchangeRate={this.props.exchangeRate}
                     isFetchingPayment={this.props.isFetchingPayment}
                     booking={this.props.booking}
                     CCname={values.CCname}
@@ -354,6 +364,8 @@ class BookingForm extends Component {
                     payment={this.payment}
                     paymentError={this.paymentError}
                     hotel={this.props.hotel}
+                    currency={this.props.currency}
+                    exchangeRate={this.props.exchangeRate}
                     paymentErrorText={this.props.paymentErrorText}
 
 
@@ -429,6 +441,8 @@ function mapStateToProps(state) {
     const {stripeKey} = state.wizardReducer;
     const {noRouteMessage} = state.wizardReducer;
     const {shareAnnouncement} = state.wizardReducer;
+    const {currency} = state.wizardReducer;
+    const {exchangeRate} = state.wizardReducer;
     const paymentErrorText = state.wizardReducer.paymentErrorText ? state.wizardReducer.paymentErrorText : '';
     const values = state.form.wizard && state.form.wizard.values ? state.form.wizard.values : {
         amount: '66600',
@@ -444,6 +458,8 @@ function mapStateToProps(state) {
     };
 
     return {
+        exchangeRate,
+        currency,
         hotel,
         hotels,
         headline,
